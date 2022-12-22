@@ -1,0 +1,31 @@
+﻿<Window x:Class="CollegeDatabaseProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:CollegeDatabaseProject.Views"
+        xmlns:viewmodels="clr-namespace:CollegeDatabaseProject.ViewModels"
+        mc:Ignorable="d"
+        Title="CollegeDatabaseProject" Height="720" Width="1280" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowState="Maximized" Icon="/Resources/icon.png">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:TopBarViewModel}">
+            <views:TopBarView DataContext="{Binding}"></views:TopBarView>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:HomePageViewModel}">
+            <views:HomePageView DataContext="{Binding}"></views:HomePageView>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ContentControl Grid.Row="0" Grid.Column="0" 
+                        Content="{Binding TopBarViewModel}" 
+                        MouseLeftButtonDown="MouseLeftButtonDownEvent"
+                        MouseDoubleClick="ContentControl_OnMouseDoubleClick"/>
+        <ContentControl Grid.Row="1" Grid.Column="0" 
+                        Content="{Binding CurrentViewModel}"/>
+    </Grid>
+</Window>
