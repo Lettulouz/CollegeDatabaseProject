@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace WarehousePLUS.Commands;
+namespace CollegeDatabaseProject.Commands;
 
 public abstract class CommandBase : ICommand
 {

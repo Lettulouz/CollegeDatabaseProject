@@ -1,6 +1,6 @@
-using WarehousePLUS.Stores;
+using CollegeDatabaseProject.Stores;
 
-namespace WarehousePLUS.ViewModels;
+namespace CollegeDatabaseProject.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {

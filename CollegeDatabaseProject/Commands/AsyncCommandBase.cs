@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace WarehousePLUS.Commands;
+namespace CollegeDatabaseProject.Commands;
 
 public abstract class AsyncCommandBase : CommandBase
 {

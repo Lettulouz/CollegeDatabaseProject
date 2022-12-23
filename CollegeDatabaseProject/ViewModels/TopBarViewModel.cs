@@ -1,7 +1,7 @@
 using System.Windows.Media;
-using WarehousePLUS.Models;
+using CollegeDatabaseProject.Models;
 
-namespace WarehousePLUS.ViewModels;
+namespace CollegeDatabaseProject.ViewModels;
 
 public class TopBarViewModel : ViewModelBase
 {

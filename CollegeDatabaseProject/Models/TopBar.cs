@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Windows.Media;
 
-namespace WarehousePLUS.Models;
+namespace CollegeDatabaseProject.Models;
 
 public class TopBar
 {
     //Content
     private const string MainPath = "/Resources/";
-    public const string AppIconPath = MainPath + "wika.png";
-    public const string AppName = "";
+    public const string AppIconPath = MainPath + "icon.png";
+    public const string AppName = "GrontoMapa";
     public const string MinimizeIconPath = MainPath + "minimize.png";
     public const string StateIconPath = MainPath + "resize.png";
     public const string CloseIconPath = MainPath + "close.png";

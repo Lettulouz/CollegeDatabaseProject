@@ -1,7 +1,7 @@
 using System;
-using WarehousePLUS.ViewModels;
+using CollegeDatabaseProject.ViewModels;
 
-namespace WarehousePLUS.Stores;
+namespace CollegeDatabaseProject.Stores;
 
 public class NavigationStore
 {

@@ -6,7 +6,9 @@
         xmlns:views="clr-namespace:CollegeDatabaseProject.Views"
         xmlns:viewmodels="clr-namespace:CollegeDatabaseProject.ViewModels"
         mc:Ignorable="d"
-        Title="CollegeDatabaseProject" Height="720" Width="1280" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" WindowState="Maximized" Icon="/Resources/icon.png">
+        Title="CollegeDatabaseProject" Height="720" Width="1280" WindowStyle="None" ResizeMode="NoResize" 
+        WindowStartupLocation="CenterOwner" WindowState="Maximized" Icon="/Resources/icon.png" 
+        BorderBrush="Black" BorderThickness="1">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodels:TopBarViewModel}">
             <views:TopBarView DataContext="{Binding}"></views:TopBarView>

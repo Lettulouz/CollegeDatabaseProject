@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace WarehousePLUS.ViewModels;
+namespace CollegeDatabaseProject.ViewModels;
 
 public class ViewModelBase : INotifyPropertyChanged
 {
