@@ -14,13 +14,13 @@ public class TopBar
     public const string CloseIconPath = MainPath + "close.png";
     
     //Font
-    public const double FontSize = 20;
+    public const double FontSize = 18;
     public const string FontFamily = "Congenial Black";
     public const string FontWeight = "Medium";
     
     //Colors
-    private List<string> ColorHex = new();
-    public List<SolidColorBrush> SolidColorBrushesList = new();
+    private readonly List<string> ColorHex = new();
+    public readonly List<SolidColorBrush> SolidColorBrushesList = new();
     public TopBar(int switchValue)
     {
         switch (switchValue)

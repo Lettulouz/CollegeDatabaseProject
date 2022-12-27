@@ -10,36 +10,247 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label 
-            Grid.Row="1"
-            Grid.Column="1" 
-            Style="{DynamicResource LabelSuccess}"
-            FontSize="30"
-            MinHeight="100"
-            MinWidth="200"
-            hc:BorderElement.CornerRadius="15"
-            VerticalContentAlignment="Center" 
-            HorizontalContentAlignment="Center"  
-            Content="{Binding LabelInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button 
-            Grid.Row="3" 
-            Grid.Column="1" 
-            Style="{StaticResource ButtonPrimary}"
-            FontSize="30"
-            MinHeight="100"
-            MinWidth="200"
-            hc:BorderElement.CornerRadius="15"
-            Content="Dodaj 1" 
-            Command="{Binding AddOneCommand}"/>
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+            <Button 
+                MinHeight="{Binding MinHeightLabelOrButton}"
+                MinWidth="{Binding MinWidthLabelOrButton}"
+                FontSize="{Binding FontSize}"
+                Style="{StaticResource ButtonPrimary}" 
+                Content="Poprzedni"
+                Command="{Binding AddOneCommand}">
+            </Button>
+        </Grid>
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
+            <Button 
+                MinHeight="{Binding MinHeightLabelOrButton}"
+                MinWidth="{Binding MinWidthLabelOrButton}"
+                FontSize="{Binding FontSize}"
+                Style="{StaticResource ButtonPrimary}" 
+                Content="Następny">
+            </Button>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1" Margin="0 0 0 5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    Grid.Row="0" 
+                    FontSize="{Binding FontSize}"
+                    FontWeight="Bold"
+                    MinHeight="{Binding MinHeightLabelOrButton}"
+                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    hc:BorderElement.CornerRadius="4"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="Państwo:"/>
+                <Label 
+                    Grid.Row="1" 
+                    FontSize="{Binding FontSize}"
+                    MinHeight="{Binding MinHeightLabelOrButton}"
+                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    hc:BorderElement.CornerRadius="4"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="Polska"/>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    Grid.Row="0" 
+                    FontSize="{Binding FontSize}"
+                    FontWeight="Bold"
+                    MinHeight="{Binding MinHeightLabelOrButton}"
+                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    hc:BorderElement.CornerRadius="4"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="Obszar:"/>
+                <Label 
+                    Grid.Row="1" 
+                    FontSize="{Binding FontSize}"
+                    MinHeight="{Binding MinHeightLabelOrButton}"
+                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    hc:BorderElement.CornerRadius="4"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="311 895 km^2"/>
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    Grid.Row="0" 
+                    FontSize="{Binding FontSize}"
+                    FontWeight="Bold"
+                    MinHeight="{Binding MinHeightLabelOrButton}"
+                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    hc:BorderElement.CornerRadius="4"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="Ludność:"/>
+                <Label 
+                    Grid.Row="1" 
+                    FontSize="{Binding FontSize}"
+                    MinHeight="{Binding MinHeightLabelOrButton}"
+                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    hc:BorderElement.CornerRadius="4"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="37 979 000"/>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    Grid.Row="0" 
+                    FontSize="{Binding FontSize}"
+                    FontWeight="Bold"
+                    MinHeight="{Binding MinHeightLabelOrButton}"
+                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    hc:BorderElement.CornerRadius="4"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="Hymn:"/>
+                <Label 
+                    Grid.Row="1" 
+                    FontSize="{Binding FontSize}"
+                    MinHeight="{Binding MinHeightLabelOrButton}"
+                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    hc:BorderElement.CornerRadius="4"
+                    BorderThickness="0"
+                    HorizontalAlignment="Center"
+                    Content="Mazurek Dąbrowskiego"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Margin="0 0 0 15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Grid.Row="1" 
+                      Grid.Column="0" 
+                      Margin="5 0"
+                      ColumnHeaderHeight="60" 
+                      ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                      HeadersVisibility="All" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Binding="{Binding Currencies}" Header="Waluty" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Row="1" 
+                      Grid.Column="1" 
+                      Margin="5 0"
+                      ColumnHeaderHeight="60" 
+                      ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                      HeadersVisibility="All" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Binding="{Binding Continent}" Header="Kontynenty" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Row="1" 
+                      Grid.Column="2" 
+                      Margin="5 0"
+                      ColumnHeaderHeight="60" 
+                      ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                      HeadersVisibility="All" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Binding="{Binding PopulationByNationality}" Header="Populacja wg. narodowości" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Row="1" 
+                      Grid.Column="3" 
+                      Margin="5 0"
+                      ColumnHeaderHeight="60" 
+                      ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                      HeadersVisibility="All" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Binding="{Binding CapitalsOfCountry}" Header="Stolice państwa" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Row="1" 
+                      Grid.Column="4" 
+                      Margin="5 0"
+                      ColumnHeaderHeight="60" 
+                      ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                      HeadersVisibility="All" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Binding="{Binding OfficialLanguage}" Header="Język oficjalny" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Row="1" 
+                      Grid.Column="5" 
+                      Margin="5 0"
+                      ColumnHeaderHeight="60" 
+                      ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                      HeadersVisibility="All" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Binding="{Binding ForeignLanguages}" Header="Języki obce" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Row="1" 
+                      Grid.Column="6" 
+                      Margin="5 0"
+                      ColumnHeaderHeight="60" 
+                      ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                      HeadersVisibility="All" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Binding="{Binding PopulationByFaith}" Header="Ludność wg. wiary" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Grid.Row="1" 
+                      Grid.Column="7" 
+                      Margin="5 0"
+                      ColumnHeaderHeight="60" 
+                      ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                      HeadersVisibility="All" AutoGenerateColumns="False" 
+                      ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Binding="{Binding CountryLeader}" Header="Głowa państwa" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>

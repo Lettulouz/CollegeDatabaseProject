@@ -1,5 +1,7 @@
 using System;
+using CollegeDatabaseProject.Models;
 using CollegeDatabaseProject.ViewModels;
+using HandyControl.Tools.Extension;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace CollegeDatabaseProject.Commands;
@@ -7,15 +9,16 @@ namespace CollegeDatabaseProject.Commands;
 public class AddOneCommand : CommandBase
 {
     private HomePageViewModel _homePageViewModel;
+    
     public AddOneCommand(HomePageViewModel homePageViewModel)
     {
         _homePageViewModel = homePageViewModel;
     }
-
+    
     public override void Execute(object? parameter)
     {
-        int val = Int32.Parse(_homePageViewModel.LabelInput);
-        val += 1;
-        _homePageViewModel.LabelInput = val.ToString();
+        _homePageViewModel.DataList.Add(new Country("PLN"));
+        _homePageViewModel.DataList.Add(new Country("EUR"));
+        _homePageViewModel.OnPropChan();
     }
 }
