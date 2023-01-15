@@ -2,7 +2,7 @@ namespace CollegeDatabaseProject.Models;
 
 public class Country
 {
-    public string Currencies { get; set; }
+    public string Currencies { get; }
 
     public Country(string currency)
     {

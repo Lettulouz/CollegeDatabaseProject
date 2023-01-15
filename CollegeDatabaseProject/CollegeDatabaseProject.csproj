@@ -5,7 +5,9 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
-    </PropertyGroup>
+        <UserSecretsId>a3fe04cc-a777-48e9-a41a-0d6d725290f4</UserSecretsId>
+        <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
 
     <ItemGroup>
       <Resource Include="Resources\close.png" />
@@ -16,8 +18,17 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="EntityFramework" Version="6.4.4" />
       <PackageReference Include="HandyControls" Version="3.4.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="MySqlConnector" Version="2.2.5" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
     </ItemGroup>
 
 </Project>

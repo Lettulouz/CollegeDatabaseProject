@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using CollegeDatabaseProject;
+
 using CollegeDatabaseProject.Stores;
 using CollegeDatabaseProject.ViewModels;
 using CollegeDatabaseProject.Models;
 using CollegeDatabaseProject.Services;
+
 using CollegeDatabaseProject.Stores;
 using CollegeDatabaseProject.ViewModels;
+using MySqlConnector;
 using Timer = System.Threading.Timer;
 
 namespace CollegeDatabaseProject
@@ -24,14 +27,23 @@ namespace CollegeDatabaseProject
     public partial class App : Application
     {
         private static NavigationStore _navigationStore;
-
+        string _connectionString = "";
+        private string _databaseVersion = "8.0.30";
         public App()
         {
+            MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
+            con.Open();
+            var stm = "Select nazwaPanstwa from panstwo";
+            var cmd = new MySqlCommand(stm, con);
+            var output = cmd.ExecuteReader();
+            
             _navigationStore = new NavigationStore();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            _connectionString = DbConnection.getDbString();
+            
             _navigationStore.CurrentViewModel = CreateMainViewModel();
             _navigationStore.TopBarViewModel = new TopBarViewModel(2);
             MainWindow = new MainWindow()

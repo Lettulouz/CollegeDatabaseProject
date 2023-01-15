@@ -1,21 +1,28 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
+
 using System.Runtime.CompilerServices;
+using HandyControl.Controls;
 
 namespace CollegeDatabaseProject.Models;
 
+
+public class DatabaseSettings
+{
+    public string ConnectionString { get; set; }
+}
+
 public class HomePage : INotifyPropertyChanged
 {
+    
     public HomePage()
     {
-        
+       
     }
-    
-    
-    
-    
-    
-    
+
+
     
     public event PropertyChangedEventHandler? PropertyChanged;
 
