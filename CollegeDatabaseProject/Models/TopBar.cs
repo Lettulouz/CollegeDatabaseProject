@@ -35,6 +35,11 @@ public class TopBar
                 ColorHex.Add("#9e9e9e");
                 ColorHex.Add("#757575");
                 break;
+            case 2:
+                ColorHex.Add("#295f2d");
+                ColorHex.Add("#4a171e");
+                ColorHex.Add("#ffe67c");
+                break;
         }
         for (int i = 0; i < 3; i++)
         {

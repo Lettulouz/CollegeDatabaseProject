@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <PackageReference Include="HandyControls" Version="3.4.4" />
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
     </ItemGroup>
 
 </Project>

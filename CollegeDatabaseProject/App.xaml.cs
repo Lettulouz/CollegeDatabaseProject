@@ -33,7 +33,7 @@ namespace CollegeDatabaseProject
         protected override void OnStartup(StartupEventArgs e)
         {
             _navigationStore.CurrentViewModel = CreateMainViewModel();
-            _navigationStore.TopBarViewModel = new TopBarViewModel(0);
+            _navigationStore.TopBarViewModel = new TopBarViewModel(2);
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore),
