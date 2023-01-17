@@ -31,11 +31,11 @@ namespace CollegeDatabaseProject
         private string _databaseVersion = "8.0.30";
         public App()
         {
-            MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
-            con.Open();
-            var stm = "Select nazwaPanstwa from panstwo";
-            var cmd = new MySqlCommand(stm, con);
-            var output = cmd.ExecuteReader();
+           // MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
+          //  con.Open();
+           // var stm = "Select nazwaPanstwa from panstwo";
+           // var cmd = new MySqlCommand(stm, con);
+           // var output = cmd.ExecuteReader();
             
             _navigationStore = new NavigationStore();
         }
@@ -46,6 +46,7 @@ namespace CollegeDatabaseProject
             
             _navigationStore.CurrentViewModel = CreateMainViewModel();
             _navigationStore.TopBarViewModel = new TopBarViewModel(2);
+            _navigationStore.SideBarViewModel = new SideBarViewModel();
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore),

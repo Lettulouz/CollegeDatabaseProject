@@ -6,6 +6,12 @@ public class MainViewModel : ViewModelBase
 {
     private readonly NavigationStore _navigationStore;
     
+    public ViewModelBase SideBarViewModel
+    {
+        get => _navigationStore.SideBarViewModel;
+        set => _navigationStore.SideBarViewModel = value;
+    }
+    
     public ViewModelBase TopBarViewModel
     {
         get => _navigationStore.TopBarViewModel;
