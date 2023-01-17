@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         
         <TextBox Grid.Row="1" Margin="10 10 10 0" Text="{Binding SearchField}"></TextBox>
-        <Label Grid.Row="2" Content="{Binding SearchOutputField}" ContentStringFormat="Aktualnie wybrany kraj: {0}" BorderThickness="0"></Label>
+        <Label Grid.Row="2" Content="{Binding SearchOutputField, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" ContentStringFormat="Aktualnie wybrany kraj: {0}" BorderThickness="0"></Label>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -27,7 +27,8 @@
                     Command="{Binding ReloadButtonCommand}"
                     Style="{StaticResource ButtonPrimary}"/>
             <Button Grid.Column="1" Content="Szukaj" 
-                    Command="{Binding SearchButtonCommand}"/>
+                    Command="{Binding SearchButtonCommand}"
+                    Style="{StaticResource ButtonSuccess}"/>
         </Grid>
         <DataGrid Grid.Row="4" 
                   Grid.Column="0" 
@@ -35,7 +36,10 @@
                   ColumnHeaderHeight="60" 
                   ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
                   HeadersVisibility="All" AutoGenerateColumns="False" 
-                  ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}">
+                  ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectionMode="Single"
+                  IsReadOnly="True"
+                  CurrentItem="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Binding="{Binding}" Header="Kraje" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
             </DataGrid.Columns>

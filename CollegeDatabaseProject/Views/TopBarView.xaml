@@ -34,9 +34,14 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0"
-                       Margin="5" 
-                       Source="{Binding AppIconPath}"/> 
+                <Border Name="Mask" Grid.Column="0" Margin="5" CornerRadius="5" Background="Black"/>
+                <Grid Grid.Column="0" >
+                    <Grid.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=Mask}" />
+                    </Grid.OpacityMask>
+                    <Image
+                        Margin="5" Source="{Binding AppIconPath}" Stretch="UniformToFill"/> 
+                </Grid>
                 <Label Grid.Column="1" 
                        Margin="2" 
                        Content="{Binding  AppName}" 
@@ -67,31 +72,34 @@
                     </Polygon.Points>
                 </Polygon>
             </Canvas>
-            <Grid Grid.Column="4"  HorizontalAlignment="Right">
+            <Grid Grid.Column="4"  HorizontalAlignment="Right" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <controls:ButtonEx Grid.Column="0" 
-                        Background="Transparent" 
-                        BorderThickness="0"
-                        HoverBackground="{Binding BrushHoverBackground}"
-                        Click="MinimizeButtonOn_Click">
+                                   Padding="5"
+                                   Background="Transparent" 
+                                   BorderThickness="0"
+                                   HoverBackground="{Binding BrushHoverBackground}"
+                                   Click="MinimizeButtonOn_Click">
                     <Image Source="{Binding MinimizeIconPath}"/> 
                 </controls:ButtonEx>
-                <controls:ButtonEx Grid.Column="1" 
-                        Background="Transparent" 
-                        BorderThickness="0" 
-                        HoverBackground="{Binding BrushHoverBackground}"
-                        Click="ChangeStateOn_Click">
+                <controls:ButtonEx Grid.Column="1"
+                                   Padding="5"
+                                   Background="Transparent" 
+                                   BorderThickness="0" 
+                                   HoverBackground="{Binding BrushHoverBackground}"
+                                   Click="ChangeStateOn_Click">
                     <Image Source="{Binding StateIconPath}"/> 
                 </controls:ButtonEx>
-                <controls:ButtonEx Grid.Column="2" 
-                        Background="Transparent" 
-                        BorderThickness="0"
-                        HoverBackground="{Binding BrushHoverBackground}"
-                        Click="ExitButtonOn_Click">
+                <controls:ButtonEx Grid.Column="2"
+                                   Padding="5"
+                                   Background="Transparent" 
+                                   BorderThickness="0"
+                                   HoverBackground="{Binding BrushHoverBackground}"
+                                   Click="ExitButtonOn_Click">
                     <Image Source="{Binding CloseIconPath}"/> 
                 </controls:ButtonEx>
             </Grid>

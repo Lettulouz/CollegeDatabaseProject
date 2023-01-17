@@ -1,4 +1,7 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using CollegeDatabaseProject.Commands;
@@ -9,13 +12,39 @@ namespace CollegeDatabaseProject.ViewModels;
 
 public class SideBarViewModel : ViewModelBase
 {
+    private HomePageViewModel _homePageViewModel;
+    
     private ObservableCollection<string> _dataList = new();
 
     private string _searchField = "";
+
+    private object _selectedCountry;
+
+    private string _searchOutputField = "";
     
+    
+    
+    public object SelectedCountry
+    {
+        get => _selectedCountry;
+        set
+        {
+            _selectedCountry = value;
+            OnPropertyChanged("SelectedCountry");
+            _searchOutputField = _selectedCountry.ToString() ?? throw new InvalidOperationException();
+            OnPropertyChanged(nameof(SearchOutputField));
+            _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
+            
+        }
+    }
     public string SearchOutputField
     {
-        get => "Polska";
+        get => _searchOutputField;
+        set
+        {
+            _selectedCountry = value;
+            OnPropertyChanged();
+        }
     }
     
     public ObservableCollection<string> DataList
@@ -41,8 +70,9 @@ public class SideBarViewModel : ViewModelBase
     public ICommand ReloadButtonCommand { get; }
     public ICommand SearchButtonCommand { get; }
 
-    public SideBarViewModel()
+    public SideBarViewModel(HomePageViewModel homePageViewModel)
     {
+        _homePageViewModel = homePageViewModel;
         ReloadButtonCommand = new ReloadButtonCommand(this);
         SearchButtonCommand = new SearchButtonCommand(this);
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());

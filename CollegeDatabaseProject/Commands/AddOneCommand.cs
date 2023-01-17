@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CollegeDatabaseProject.Models;
 using CollegeDatabaseProject.ViewModels;
 using HandyControl.Tools.Extension;
@@ -14,11 +15,15 @@ public class AddOneCommand : CommandBase
     {
         _homePageViewModel = homePageViewModel;
     }
+
+    private List<string> test = new();
     
     public override void Execute(object? parameter)
     {
-        _homePageViewModel.DataList.Add(new Country("PLN"));
-        _homePageViewModel.DataList.Add(new Country("EUR"));
-        _homePageViewModel.OnPropChan();
+        //test.Add("Chuj");
+       // test.Add("Jd");
+       // _homePageViewModel.DataList.Add(new Country("PLN", test));
+        //_homePageViewModel.DataList.Add(new Country("EUR", test));
+       // _homePageViewModel.OnPropChan();
     }
 }

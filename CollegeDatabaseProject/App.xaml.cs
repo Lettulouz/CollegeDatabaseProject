@@ -24,11 +24,13 @@ namespace CollegeDatabaseProject
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
+    /// 
     public partial class App : Application
     {
         private static NavigationStore _navigationStore;
         string _connectionString = "";
         private string _databaseVersion = "8.0.30";
+        private static HomePageViewModel _homePageViewModel;
         public App()
         {
            // MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
@@ -46,7 +48,7 @@ namespace CollegeDatabaseProject
             
             _navigationStore.CurrentViewModel = CreateMainViewModel();
             _navigationStore.TopBarViewModel = new TopBarViewModel(2);
-            _navigationStore.SideBarViewModel = new SideBarViewModel();
+            _navigationStore.SideBarViewModel = new SideBarViewModel(_homePageViewModel);
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore),
@@ -57,7 +59,8 @@ namespace CollegeDatabaseProject
 
         private static HomePageViewModel CreateMainViewModel()
         {
-            return new HomePageViewModel();
+            _homePageViewModel = new HomePageViewModel();
+            return _homePageViewModel;
         }
         
     }

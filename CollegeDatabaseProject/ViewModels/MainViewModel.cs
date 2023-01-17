@@ -5,7 +5,7 @@ namespace CollegeDatabaseProject.ViewModels;
 public class MainViewModel : ViewModelBase
 {
     private readonly NavigationStore _navigationStore;
-    
+
     public ViewModelBase SideBarViewModel
     {
         get => _navigationStore.SideBarViewModel;
