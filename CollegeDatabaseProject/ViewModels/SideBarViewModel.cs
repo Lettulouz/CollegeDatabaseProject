@@ -1,11 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Data;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using CollegeDatabaseProject.Commands;
-using CollegeDatabaseProject.Models;
 using MySqlConnector;
 
 namespace CollegeDatabaseProject.ViewModels;
@@ -14,11 +10,11 @@ public class SideBarViewModel : ViewModelBase
 {
     private HomePageViewModel _homePageViewModel;
     
-    private ObservableCollection<string> _dataList = new();
+    private ObservableCollection<string?> _dataList = new();
 
     private string _searchField = "";
 
-    private object _selectedCountry;
+    private object _selectedCountry = "Polska";
 
     private string _searchOutputField = "";
 
@@ -28,7 +24,7 @@ public class SideBarViewModel : ViewModelBase
         set
         {
             _selectedCountry = value;
-            OnPropertyChanged("SelectedCountry");
+            OnPropertyChanged();
             _searchOutputField = _selectedCountry.ToString() ?? throw new InvalidOperationException();
             OnPropertyChanged(nameof(SearchOutputField));
             _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
@@ -45,13 +41,13 @@ public class SideBarViewModel : ViewModelBase
         }
     }
     
-    public ObservableCollection<string> DataList
+    public ObservableCollection<string?> DataList
     {
         get { return _dataList; }
         set
         {
             _dataList = value;
-            OnPropertyChanged("DataList");
+            OnPropertyChanged();
         }
     }
 
@@ -61,7 +57,7 @@ public class SideBarViewModel : ViewModelBase
         set
         {
             _searchField = value;
-            OnPropertyChanged("SearchField");
+            OnPropertyChanged();
         }
     }
 
@@ -87,12 +83,10 @@ public class SideBarViewModel : ViewModelBase
             for(int i=0; i<output.FieldCount; i++)
                 _dataList.Add(output.GetValue(i).ToString());
         }
-        OnPropertyChanged("DataList");
-
     }
 
     public void OnPropChange()
     {
-        OnPropertyChanged("DataList");
+        OnPropertyChanged();
     }
 }

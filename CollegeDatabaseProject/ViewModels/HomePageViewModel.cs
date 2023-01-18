@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CollegeDatabaseProject.Commands;
 using CollegeDatabaseProject.Models;
-using HandyControl.Controls;
 using HandyControl.Tools.Extension;
 using MySqlConnector;
 
@@ -12,10 +10,8 @@ namespace CollegeDatabaseProject.ViewModels;
 
 public class HomePageViewModel : ViewModelBase
 {
-    private int LabelInputValue = 0;
+    private int LabelInputValue;
 
-    private HomePage _homePage;
-    
     private Country _country = new();
 
     public static double FontSize
@@ -33,9 +29,9 @@ public class HomePageViewModel : ViewModelBase
         get => 100;
     }
     
-    private string _chosenCountry = "";
+    private string? _chosenCountry = "";
 
-    public string ChosenCountry
+    public string? ChosenCountry
     {
         get => _chosenCountry;
         set
@@ -46,7 +42,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public string HeadOfCountry
+    public string? HeadOfCountry
     {
         get => _country.HeadOfCountry;
         set
@@ -56,7 +52,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public string Population
+    public string? Population
     {
         get => _country.Population;
         set
@@ -66,7 +62,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public string Territory
+    public string? Territory
     {
         get => _country.Territory;
         set
@@ -76,7 +72,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public string Anthem
+    public string? Anthem
     {
         get => _country.Anthem;
         set
@@ -86,7 +82,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<string> CurrenciesInCountry
+    public ObservableCollection<string?> CurrenciesInCountry
     {
         get { return _country.Currencies; }
         set
@@ -97,7 +93,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public ObservableCollection<string> CountryOnContinents
+    public ObservableCollection<string?> CountryOnContinents
     {
         get { return _country.Continents; }
         set
@@ -108,7 +104,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public ObservableCollection<string> PopulationByNationality
+    public ObservableCollection<string?> PopulationByNationality
     {
         get { return _country.PopulationByNationality; }
         set
@@ -119,7 +115,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public ObservableCollection<string> CapitalsOfCountry
+    public ObservableCollection<string?> CapitalsOfCountry
     {
         get { return _country.CapitalsOfCountry; }
         set
@@ -130,7 +126,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public ObservableCollection<string> ForeignLanguages
+    public ObservableCollection<string?> ForeignLanguages
     {
         get { return _country.ForeignLanguages; }
         set
@@ -141,7 +137,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public ObservableCollection<string> OfficialLanguages
+    public ObservableCollection<string?> OfficialLanguages
     {
         get { return _country.OfficialLanguages; }
         set
@@ -152,7 +148,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public ObservableCollection<string> PopulationByFaith
+    public ObservableCollection<string?> PopulationByFaith
     {
         get { return _country.PopulationByFaith; }
         set
@@ -169,7 +165,7 @@ public class HomePageViewModel : ViewModelBase
         set
         {
             LabelInputValue = Int32.Parse(value); 
-            OnPropertyChanged("LabelInput");
+            OnPropertyChanged();
         }
     }
     
@@ -177,13 +173,11 @@ public class HomePageViewModel : ViewModelBase
 
     public HomePageViewModel()
     {
-        _homePage = new();
         AddOneCommand = new AddOneCommand(this);
     }
 
-    public void FillFieldsWithDb(string countryName)
+    public void FillFieldsWithDb(string? countryName)
     {
-        ObservableCollection<string> temp = new();
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
 
         var stm = "Select id from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
@@ -206,8 +200,10 @@ public class HomePageViewModel : ViewModelBase
         CurrenciesInCountry.Clear();
         while (output2.Read())
         {
-            for(int i=0; i<output2.FieldCount; i++)
+            for (int i = 0; i < output2.FieldCount; i++)
+            {
                 CurrenciesInCountry.Add(output2.GetValue(i).ToString());
+            }
         }
         con.Close();
         
@@ -328,8 +324,8 @@ public class HomePageViewModel : ViewModelBase
         var output9 = cmd9.ExecuteScalar();
         con.Close();
         Territory = "";
-        Territory = output9.ToString();
-        
+        if (output9 != null) Territory = output9.ToString();
+
         //---------------------------
         
         var stm10 = "Select CONCAT(tgp.tytul, ' ', gp.imie, ' ', gp.nazwisko) from glowapanstwa as gp " +
@@ -369,10 +365,4 @@ public class HomePageViewModel : ViewModelBase
         if(output12 !=  null)
             Anthem = output12.ToString();
     }
-
-    public void OnPropChan()
-    {
-        OnPropertyChanged("DataList");
-    }
-    
 }

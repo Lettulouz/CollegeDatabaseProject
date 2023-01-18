@@ -5,17 +5,17 @@ namespace CollegeDatabaseProject.Models;
 
 public class Country
 {
-    public ObservableCollection<string> Currencies { get; }
-    public ObservableCollection<string> Continents { get; }
-    public ObservableCollection<string> PopulationByNationality { get; }
-    public ObservableCollection<string> CapitalsOfCountry { get; }
-    public ObservableCollection<string> OfficialLanguages { get; }
-    public ObservableCollection<string> ForeignLanguages { get; }
-    public ObservableCollection<string> PopulationByFaith  { get; }
-    public string HeadOfCountry { get; set; }
-    public string Population { get; set; }
-    public string Territory { get; set; }
-    public string Anthem { get; set; }
+    public ObservableCollection<string?> Currencies { get; }
+    public ObservableCollection<string?> Continents { get; }
+    public ObservableCollection<string?> PopulationByNationality { get; }
+    public ObservableCollection<string?> CapitalsOfCountry { get; }
+    public ObservableCollection<string?> OfficialLanguages { get; }
+    public ObservableCollection<string?> ForeignLanguages { get; }
+    public ObservableCollection<string?> PopulationByFaith  { get; }
+    public string? HeadOfCountry { get; set; }
+    public string? Population { get; set; }
+    public string? Territory { get; set; }
+    public string? Anthem { get; set; }
 
     public Country()
     {
