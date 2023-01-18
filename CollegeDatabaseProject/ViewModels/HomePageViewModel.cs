@@ -179,12 +179,17 @@ public class HomePageViewModel : ViewModelBase
     public void FillFieldsWithDb(string? countryName)
     {
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
+        MySqlTransaction tr = null;
 
+       
         var stm = "Select id from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
         var cmd = new MySqlCommand(stm, con);
         cmd.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         con.Open();
+        tr = con.BeginTransaction();
+        cmd.Transaction = tr;
         var output = cmd.ExecuteScalar();
+        tr.Commit();
         con.Close();
         
         //---------------------------
