@@ -55,6 +55,7 @@ namespace CollegeDatabaseProject
             };
             MainWindow.Show();
             base.OnStartup(e);
+            string test = "";
         }
 
         private static HomePageViewModel CreateMainViewModel()
@@ -62,6 +63,7 @@ namespace CollegeDatabaseProject
             _homePageViewModel = new HomePageViewModel();
             return _homePageViewModel;
         }
+        
         
     }
     
