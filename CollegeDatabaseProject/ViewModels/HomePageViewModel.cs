@@ -5,6 +5,7 @@ using System.Windows.Input;
 using CollegeDatabaseProject.Commands;
 using CollegeDatabaseProject.Models;
 using HandyControl.Tools.Extension;
+using MySqlConnector;
 
 namespace CollegeDatabaseProject.ViewModels;
 
@@ -14,7 +15,7 @@ public class HomePageViewModel : ViewModelBase
 
     private HomePage _homePage;
     
-    private Country _country = new("Prezydent Anrzej Duda");
+    private Country _country = new();
     
     public static double FontSize
     {
@@ -39,6 +40,7 @@ public class HomePageViewModel : ViewModelBase
         set
         {
             _chosenCountry = value;
+            FillFieldsWithDb(_chosenCountry);
             OnPropertyChanged();
         }
     }
@@ -46,9 +48,43 @@ public class HomePageViewModel : ViewModelBase
     public string HeadOfCountry
     {
         get => _country.HeadOfCountry;
+        set
+        {
+            _country.HeadOfCountry = value;
+            OnPropertyChanged();
+        }
     }
     
+    public string Population
+    {
+        get => _country.Population;
+        set
+        {
+            _country.Population = value;
+            OnPropertyChanged();
+        }
+    }
     
+    public string Territory
+    {
+        get => _country.Territory;
+        set
+        {
+            _country.Territory = value;
+            OnPropertyChanged();
+        }
+    }
+    
+    public string Anthem
+    {
+        get => _country.Anthem;
+        set
+        {
+            _country.Anthem = value;
+            OnPropertyChanged();
+        }
+    }
+
     public ObservableCollection<string> CurrenciesInCountry
     {
         get { return _country.Currencies; }
@@ -144,6 +180,194 @@ public class HomePageViewModel : ViewModelBase
         AddOneCommand = new AddOneCommand(this);
     }
 
+    public void FillFieldsWithDb(string countryName)
+    {
+        ObservableCollection<string> temp = new();
+        MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
+
+        var stm = "Select id from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
+        var cmd = new MySqlCommand(stm, con);
+        cmd.Parameters.AddWithValue("@nazwaPanstwa", countryName);
+        con.Open();
+        var output = cmd.ExecuteScalar();
+        con.Close();
+        
+        //---------------------------
+        
+        var stm2 = "Select w.skrot from walutypanstwa AS wp " +
+                  "INNER JOIN waluty AS w ON wp.id_waluty=w.id " +
+                  "INNER JOIN panstwo AS p ON p.id=wp.id_panstwa " +
+                  "WHERE p.id=@idPanstwa";
+        var cmd2 = new MySqlCommand(stm2, con);
+        cmd2.Parameters.AddWithValue("@idPanstwa", output);
+        con.Open();
+        var output2 = cmd2.ExecuteReader();
+        CurrenciesInCountry.Clear();
+        while (output2.Read())
+        {
+            for(int i=0; i<output2.FieldCount; i++)
+                CurrenciesInCountry.Add(output2.GetValue(i).ToString());
+        }
+        con.Close();
+        
+        //---------------------------
+        
+        var stm3 = "Select k.nazwaKontynentu from panstwokontynent AS pk " +
+                   "INNER JOIN kontynenty AS k ON pk.id_kontynentu=k.id " +
+                   "INNER JOIN panstwo AS p ON p.id=pk.id_panstwa " +
+                   "WHERE p.id=@idPanstwa";
+        var cmd3 = new MySqlCommand(stm3, con);
+        cmd3.Parameters.AddWithValue("@idPanstwa", output);
+        con.Open();
+        var output3 = cmd3.ExecuteReader();
+        CountryOnContinents.Clear();
+        while (output3.Read())
+        {
+            for(int i=0; i<output3.FieldCount; i++)
+                CountryOnContinents.Add(output3.GetValue(i).ToString());
+        }
+        con.Close();
+        
+        //---------------------------
+        
+        var stm4 = "Select CONCAT(n.nazwa,' - ',ln.liczebnosc,'%') from ludnoscwgnarodowosci AS ln " +
+                   "INNER JOIN narodowosc AS n ON ln.id_narodowosci=n.id " +
+                   "INNER JOIN panstwo AS p ON p.id=ln.id_panstwa " +
+                   "WHERE p.id=@idPanstwa ORDER BY ln.liczebnosc DESC";
+        var cmd4 = new MySqlCommand(stm4, con);
+        cmd4.Parameters.AddWithValue("@idPanstwa", output);
+        con.Open();
+        var output4 = cmd4.ExecuteReader();
+        PopulationByNationality.Clear();
+        while (output4.Read())
+        {
+            for(int i=0; i<output4.FieldCount; i++)
+                PopulationByNationality.Add(output4.GetValue(i).ToString());
+        }
+        con.Close();
+        
+        //---------------------------
+        
+        var stm5 = "Select s.nazwa from stolicapanstwa AS sp " +
+                   "INNER JOIN stolice AS s ON sp.id_stolicy=s.id " +
+                   "INNER JOIN panstwo AS p ON p.id=sp.id_panstwa " +
+                   "WHERE p.id=@idPanstwa";
+        var cmd5 = new MySqlCommand(stm5, con);
+        cmd5.Parameters.AddWithValue("@idPanstwa", output);
+        con.Open();
+        var output5 = cmd5.ExecuteReader();
+        CapitalsOfCountry.Clear();
+        while (output5.Read())
+        {
+            for(int i=0; i<output5.FieldCount; i++)
+                CapitalsOfCountry.Add(output5.GetValue(i).ToString());
+        }
+        con.Close();
+        
+        //---------------------------
+        
+        var stm6 = "Select j.nazwa from jezykoficjalny AS jo " +
+                   "INNER JOIN jezyki AS j ON jo.id_jezyka=j.id " +
+                   "INNER JOIN panstwo AS p ON p.id=jo.id_panstwa " +
+                   "WHERE p.id=@idPanstwa";
+        var cmd6 = new MySqlCommand(stm6, con);
+        cmd6.Parameters.AddWithValue("@idPanstwa", output);
+        con.Open();
+        var output6 = cmd6.ExecuteReader();
+        OfficialLanguages.Clear();
+        while (output6.Read())
+        {
+            for(int i=0; i<output6.FieldCount; i++)
+                OfficialLanguages.Add(output6.GetValue(i).ToString());
+        }
+        con.Close();
+        
+        //---------------------------
+        
+        var stm7 = "Select CONCAT(j.nazwa, ' - ', jo.procent, '%') from jezykobcy AS jo " +
+                   "INNER JOIN jezyki AS j ON jo.id_jezyka=j.id " +
+                   "INNER JOIN panstwo AS p ON p.id=jo.id_panstwa " +
+                   "WHERE p.id=@idPanstwa ORDER BY jo.procent DESC";
+        var cmd7 = new MySqlCommand(stm7, con);
+        cmd7.Parameters.AddWithValue("@idPanstwa", output);
+        con.Open();
+        var output7 = cmd7.ExecuteReader();
+        ForeignLanguages.Clear();
+        while (output7.Read())
+        {
+            for(int i=0; i<output7.FieldCount; i++)
+                ForeignLanguages.Add(output7.GetValue(i).ToString());
+        }
+        con.Close();
+        
+        //---------------------------
+        
+        var stm8 = "Select CONCAT(w.nazwa, ' - ', lw.liczebnosc, '%') from ludnoscwgwierzen AS lw " +
+                   "INNER JOIN wiary AS w ON lw.id_wiary=w.id " +
+                   "INNER JOIN panstwo AS p ON p.id=lw.id_panstwa " +
+                   "WHERE p.id=@idPanstwa ORDER BY lw.liczebnosc DESC";
+        var cmd8 = new MySqlCommand(stm8, con);
+        cmd8.Parameters.AddWithValue("@idPanstwa", output);
+        con.Open();
+        var output8 = cmd8.ExecuteReader();
+        PopulationByFaith.Clear();
+        while (output8.Read())
+        {
+            for(int i=0; i<output8.FieldCount; i++)
+                PopulationByFaith.Add(output8.GetValue(i).ToString());
+        }
+        con.Close();
+        
+        //---------------------------
+        
+        var stm9 = "Select CONCAT(obszar, ' km²') from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
+        var cmd9 = new MySqlCommand(stm9, con);
+        cmd9.Parameters.AddWithValue("@nazwaPanstwa", countryName);
+        con.Open();
+        var output9 = cmd9.ExecuteScalar();
+        con.Close();
+        Territory = "";
+        Territory = output9.ToString();
+        
+        //---------------------------
+        
+        var stm10 = "Select CONCAT(tgp.tytul, ' ', gp.imie, ' ', gp.nazwisko) from glowapanstwa as gp " +
+                    "INNER JOIN tytulyglowpanstw as tgp ON gp.id_tytulu=tgp.id " +
+                    "INNER JOIN panstwo as p ON gp.id_panstwa=p.id " +
+                    "WHERE nazwaPanstwa=@nazwaPanstwa";
+        var cmd10 = new MySqlCommand(stm10, con);
+        cmd10.Parameters.AddWithValue("@nazwaPanstwa", countryName);
+        con.Open();
+        var output10 = cmd10.ExecuteScalar();
+        con.Close();
+        HeadOfCountry = "";
+        if(output10 != null)
+            HeadOfCountry = output10.ToString();
+        
+        //---------------------------
+        
+        var stm11 = "Select ludnosc from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
+        var cmd11 = new MySqlCommand(stm11, con);
+        cmd11.Parameters.AddWithValue("@nazwaPanstwa", countryName);
+        con.Open();
+        var output11 = cmd11.ExecuteScalar();
+        con.Close();
+        Population = "";
+        if(output11 != null)
+            Population = output11.ToString();
+        
+        //---------------------------
+        
+        var stm12 = "Select hymn from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
+        var cmd12 = new MySqlCommand(stm12, con);
+        cmd12.Parameters.AddWithValue("@nazwaPanstwa", countryName);
+        con.Open();
+        var output12 = cmd12.ExecuteScalar();
+        con.Close();
+        Anthem = "";
+        if(output12 !=  null)
+            Anthem = output12.ToString();
+    }
 
     public void OnPropChan()
     {

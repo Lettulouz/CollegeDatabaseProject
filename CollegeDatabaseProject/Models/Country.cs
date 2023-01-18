@@ -12,11 +12,17 @@ public class Country
     public ObservableCollection<string> OfficialLanguages { get; }
     public ObservableCollection<string> ForeignLanguages { get; }
     public ObservableCollection<string> PopulationByFaith  { get; }
-    public string HeadOfCountry { get; }
+    public string HeadOfCountry { get; set; }
+    public string Population { get; set; }
+    public string Territory { get; set; }
+    public string Anthem { get; set; }
 
-    public Country(string headofcountry)
+    public Country()
     {
-        HeadOfCountry = headofcountry;
+        HeadOfCountry = "";
+        Population = "";
+        Territory = "";
+        Anthem = "";
         Currencies = new();
         Continents = new();
         PopulationByNationality = new();
@@ -24,6 +30,7 @@ public class Country
         OfficialLanguages = new();
         ForeignLanguages = new();
         PopulationByFaith = new();
+        /*
         AddCurrency("PLN");
         AddCurrency("EUR");
         AddContinent("Europa");
@@ -39,6 +46,7 @@ public class Country
         AddPopulationByFaith("muzułmanizm - 10%");
         AddPopulationByFaith("buddyzm - 5%");
         AddPopulationByFaith("niewierzący - 35%");
+        */
         
     }
 
