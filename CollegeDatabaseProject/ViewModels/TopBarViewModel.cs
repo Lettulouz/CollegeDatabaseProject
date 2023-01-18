@@ -9,7 +9,15 @@ public class TopBarViewModel : ViewModelBase
     
     public static string AppIconPath => TopBar.AppIconPath;
 
-    public static string AppName => TopBar.AppName;
+    public string AppName
+    {
+        get => _topBar.AppName;
+        set
+        {
+            _topBar.AppName = value;
+            OnPropertyChanged();
+        }
+    }
 
     public static string MinimizeIconPath => TopBar.MinimizeIconPath;
 

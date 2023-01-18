@@ -8,13 +8,13 @@ public class TopBar
     //Content
     private const string MainPath = "/Resources/";
     public const string AppIconPath = MainPath + "icon.png";
-    public const string AppName = "GrontoMapa";
+    public string AppName = "GrontoMapa";
     public const string MinimizeIconPath = MainPath + "minimize.png";
     public const string StateIconPath = MainPath + "resize.png";
     public const string CloseIconPath = MainPath + "close.png";
     
     //Font
-    public const double FontSize = 18;
+    public const double FontSize = 17;
     public const string FontFamily = "Congenial Black";
     public const string FontWeight = "Medium";
     

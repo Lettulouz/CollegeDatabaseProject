@@ -17,25 +17,6 @@
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
-            <Button 
-                MinHeight="{Binding MinHeightLabelOrButton}"
-                MinWidth="{Binding MinWidthLabelOrButton}"
-                FontSize="{Binding FontSize}"
-                Style="{StaticResource ButtonPrimary}" 
-                Content="Poprzedni"
-                Command="{Binding AddOneCommand}">
-            </Button>
-        </Grid>
-        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="2">
-            <Button 
-                MinHeight="{Binding MinHeightLabelOrButton}"
-                MinWidth="{Binding MinWidthLabelOrButton}"
-                FontSize="{Binding FontSize}"
-                Style="{StaticResource ButtonPrimary}" 
-                Content="Następny">
-            </Button>
-        </Grid>
         <Grid Grid.Row="0" Grid.Column="1" Margin="0 15 0 5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

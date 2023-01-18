@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CollegeDatabaseProject.Commands;
 using CollegeDatabaseProject.Models;
+using HandyControl.Controls;
 using HandyControl.Tools.Extension;
 using MySqlConnector;
 
@@ -16,7 +17,7 @@ public class HomePageViewModel : ViewModelBase
     private HomePage _homePage;
     
     private Country _country = new();
-    
+
     public static double FontSize
     {
         get => 14;
@@ -340,7 +341,7 @@ public class HomePageViewModel : ViewModelBase
         con.Open();
         var output10 = cmd10.ExecuteScalar();
         con.Close();
-        HeadOfCountry = "";
+        HeadOfCountry = "Nie podano";
         if(output10 != null)
             HeadOfCountry = output10.ToString();
         
@@ -352,7 +353,7 @@ public class HomePageViewModel : ViewModelBase
         con.Open();
         var output11 = cmd11.ExecuteScalar();
         con.Close();
-        Population = "";
+        Population = "Nie podano";
         if(output11 != null)
             Population = output11.ToString();
         
@@ -364,7 +365,7 @@ public class HomePageViewModel : ViewModelBase
         con.Open();
         var output12 = cmd12.ExecuteScalar();
         con.Close();
-        Anthem = "";
+        Anthem = "Nie podano";
         if(output12 !=  null)
             Anthem = output12.ToString();
     }

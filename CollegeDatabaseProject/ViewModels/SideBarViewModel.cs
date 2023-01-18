@@ -21,9 +21,7 @@ public class SideBarViewModel : ViewModelBase
     private object _selectedCountry;
 
     private string _searchOutputField = "";
-    
-    
-    
+
     public object SelectedCountry
     {
         get => _selectedCountry;
@@ -69,12 +67,14 @@ public class SideBarViewModel : ViewModelBase
 
     public ICommand ReloadButtonCommand { get; }
     public ICommand SearchButtonCommand { get; }
+    public ICommand OpenAdminCommand { get; }
 
     public SideBarViewModel(HomePageViewModel homePageViewModel)
     {
         _homePageViewModel = homePageViewModel;
         ReloadButtonCommand = new ReloadButtonCommand(this);
         SearchButtonCommand = new SearchButtonCommand(this);
+        OpenAdminCommand = new OpenAdminCommand();
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
 
         var stm = "Select nazwaPanstwa from panstwo";
