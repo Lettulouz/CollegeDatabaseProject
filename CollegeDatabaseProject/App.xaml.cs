@@ -42,6 +42,7 @@ namespace CollegeDatabaseProject
             _navigationStore = new NavigationStore();
         }
 
+        /*
         protected override void OnStartup(StartupEventArgs e)
         {
             _connectionString = DbConnection.getDbString();
@@ -62,7 +63,30 @@ namespace CollegeDatabaseProject
             _homePageViewModel = new HomePageViewModel();
             return _homePageViewModel;
         }
+        */
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            _connectionString = DbConnection.getDbString();
+            
+            TopBarViewModel topBarViewModel = new(1);
+            topBarViewModel.AppName = "Administrator";
+            _navigationStore.CurrentViewModel = CreateAdminViewModel();
+            _navigationStore.TopBarViewModel = topBarViewModel;
+            _navigationStore.SideBarViewModel = new SideBarViewModel(_homePageViewModel);
+            Window test = new AdminWindow()
+            {
+                DataContext = new MainViewModel(_navigationStore),
+            };
+            test.Show();
+            base.OnStartup(e);
+        }
         
+        
+        private AdminViewModel CreateAdminViewModel()
+        {
+            AdminViewModel adminViewModel = new();
+            return adminViewModel;
+        }
         
     }
     
