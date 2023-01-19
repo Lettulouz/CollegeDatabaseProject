@@ -70,7 +70,7 @@ public class SideBarViewModel : ViewModelBase
         _homePageViewModel = homePageViewModel;
         ReloadButtonCommand = new ReloadButtonCommand(this);
         SearchButtonCommand = new SearchButtonCommand(this);
-        OpenAdminCommand = new OpenAdminCommand();
+        OpenAdminCommand = new OpenAdminCommand(homePageViewModel);;
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
 
         var stm = "Select nazwaPanstwa from panstwo";

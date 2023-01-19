@@ -23,8 +23,10 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                        Content="{Binding TopBarViewModel}" />
+        <ContentControl Grid.Row="0" Grid.Column="0"
+                        Content="{Binding TopBarViewModel}" 
+                        MouseLeftButtonDown="MouseLeftButtonDownEvent"
+                        MouseDoubleClick="ContentControl_OnMouseDoubleClick"/>
         <ContentControl Grid.Row="1" Grid.Column="0" 
                         Content="{Binding CurrentViewModel}"/>
     </Grid>

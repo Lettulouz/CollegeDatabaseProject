@@ -14,6 +14,9 @@
         <DataTemplate DataType="{x:Type viewModels:TopBarViewModel}">
             <views:TopBarView DataContext="{Binding}"></views:TopBarView>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:SideBarViewModel}">
+            <views:SideBarView DataContext="{Binding}"></views:SideBarView>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewModels:AdminViewModel}">
             <views:AdminView DataContext="{Binding}"></views:AdminView>
         </DataTemplate>
@@ -23,9 +26,17 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.25*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
         <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                        Content="{Binding TopBarViewModel}" />
-        <ContentControl Grid.Row="1" Grid.Column="0" 
+                        Content="{Binding TopBarViewModel}" 
+                        MouseLeftButtonDown="MouseLeftButtonDownEvent"
+                        MouseDoubleClick="ContentControl_OnMouseDoubleClick"/>
+        <ContentControl Grid.Row="1" Grid.Column="0"
+                        Content="{Binding SideBarViewModel}" />        
+        <ContentControl Grid.Row="1" Grid.Column="1" 
                         Content="{Binding CurrentViewModel}"/>
     </Grid>
 </Window>
