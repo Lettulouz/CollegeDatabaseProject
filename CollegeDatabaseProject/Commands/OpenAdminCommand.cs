@@ -21,7 +21,6 @@ public class OpenAdminCommand : CommandBase
         topBarViewModel.AppName = "Administrator";
         _navigationStore.CurrentViewModel = CreateLoginViewModel();
         _navigationStore.TopBarViewModel = topBarViewModel;
-        _navigationStore.SideBarViewModel = new SideBarViewModel(_homePageViewModel);
         Window test = new LoginWindow()
         {
             DataContext = new MainViewModel(_navigationStore),
@@ -32,7 +31,7 @@ public class OpenAdminCommand : CommandBase
     
     private LoginViewModel CreateLoginViewModel()
     {
-        LoginViewModel loginViewModel = new();
+        LoginViewModel loginViewModel = new(_homePageViewModel);
         return loginViewModel;
     }
 

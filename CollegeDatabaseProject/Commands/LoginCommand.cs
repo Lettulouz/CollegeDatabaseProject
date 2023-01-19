@@ -11,10 +11,12 @@ namespace CollegeDatabaseProject.Commands;
 public class LoginCommand : CommandBase
 {
     private LoginViewModel _loginViewModel;
+    private readonly HomePageViewModel _homePageViewModel;
     private NavigationStore _navigationStore = new();
-    public LoginCommand(LoginViewModel loginViewModel)
+    public LoginCommand(LoginViewModel loginViewModel, HomePageViewModel homePageViewModel)
     {
         _loginViewModel = loginViewModel;
+        _homePageViewModel = homePageViewModel;
     }
     public override void Execute(object? parameter)
     {
@@ -29,6 +31,8 @@ public class LoginCommand : CommandBase
             topBarViewModel.AppName = "Administrator";
             _navigationStore.CurrentViewModel = CreateAdminViewModel();
             _navigationStore.TopBarViewModel = topBarViewModel;
+            _navigationStore.SideBarViewModel = new SideBarViewModel(_homePageViewModel);
+
             Window test = new AdminWindow()
             {
                 DataContext = new MainViewModel(_navigationStore),

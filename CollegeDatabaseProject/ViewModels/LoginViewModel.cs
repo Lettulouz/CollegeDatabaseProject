@@ -46,8 +46,8 @@ public class LoginViewModel : ViewModelBase
 
     public ICommand LoginCommand { get; }
     
-    public LoginViewModel()
+    public LoginViewModel(HomePageViewModel homePageViewModel)
     {
-        LoginCommand = new LoginCommand(this);
+        LoginCommand = new LoginCommand(this, homePageViewModel);
     }
 }
