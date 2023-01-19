@@ -17,6 +17,8 @@
       <Resource Include="Resources\resize.png" />
       <None Remove="Resources\background.jpg" />
       <Resource Include="Resources\background.jpg" />
+      <None Remove="Resources\homepagebackground.png" />
+      <Resource Include="Resources\homepagebackground.png" />
     </ItemGroup>
 
     <ItemGroup>

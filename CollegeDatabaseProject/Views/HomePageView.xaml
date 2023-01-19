@@ -8,6 +8,9 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" Background="White">
     <Grid>
+        <Grid.Background>  
+            <ImageBrush ImageSource="/CollegeDatabaseProject;component/Resources/homepagebackground.png" Opacity="0.1"/>     
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*"/>
