@@ -41,6 +41,64 @@
                    BasedOn="{StaticResource DataGridRowStyle}">
                 <Setter Property="IsHitTestVisible" Value="False"/>
             </Style>
+            <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Grid>
+                                <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                         x:Name="textSource" 
+                                         Background="Transparent" 
+                                         Panel.ZIndex="2" 
+                                         BorderBrush="Chocolate" BorderThickness="3"/>
+                                <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1" BorderBrush="Chocolate" BorderThickness="3">
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
+                                            <Setter Property="Foreground" Value="Transparent"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                    <Setter Property="Foreground" Value="LightGray"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <Style x:Key="placeHolderPass" TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource PasswordBoxBaseStyle}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type PasswordBox}">
+                            <Grid>
+                                <PasswordBox 
+                                         x:Name="textSource" 
+                                         Background="Transparent" 
+                                         Panel.ZIndex="2" 
+                                         BorderBrush="Chocolate" BorderThickness="3"/>
+                                <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1" BorderBrush="Chocolate" BorderThickness="3">
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBaseStyle}">
+                                            <Setter Property="Foreground" Value="Transparent"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                    <Setter Property="Foreground" Value="LightGray"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

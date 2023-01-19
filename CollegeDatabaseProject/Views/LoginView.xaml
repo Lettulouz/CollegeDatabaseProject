@@ -24,8 +24,8 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="1.75*"/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="1" Grid.Column="1" FontSize="20" Text="{Binding UserLogin}" Opacity="0.7" BorderBrush="Chocolate" BorderThickness="3"/>
-        <PasswordBox Grid.Row="3" Grid.Column="1" FontSize="20" PasswordChanged="PasswordBox_PasswordChanged" Opacity="0.7" BorderBrush="Chocolate" BorderThickness="3"/>
+        <TextBox Style="{StaticResource placeHolder}" Tag="Login" Grid.Row="1" Grid.Column="1" FontSize="20" Text="{Binding UserLogin}" Opacity="0.7"/>
+        <PasswordBox Grid.Row="3" Grid.Column="1" Style="{StaticResource placeHolderPass}"  Tag="Login" FontSize="20" PasswordChanged="PasswordBox_PasswordChanged" Opacity="0.7" BorderBrush="Chocolate" BorderThickness="3"/>
         <Button Grid.Row="5" Grid.Column="1" FontSize="20" MinHeight="50" MinWidth="100" Content="Zaloguj" 
                 Style="{StaticResource ButtonWarning}"
                 Command="{Binding LoginCommand}"/>
