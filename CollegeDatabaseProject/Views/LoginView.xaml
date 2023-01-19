@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:CollegeDatabaseProject.Views"
+             xmlns:viewModels="clr-namespace:CollegeDatabaseProject.ViewModels"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" Background="White">
     <UserControl.InputBindings>        
@@ -27,9 +29,24 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="1.75*"/>
         </Grid.ColumnDefinitions>
-        <TextBox Style="{StaticResource placeHolder}" Tag="Login" Grid.Row="1" Grid.Column="1" FontSize="20" Text="{Binding UserLogin}" Opacity="0.7"/>
-        <PasswordBox Grid.Row="3" Grid.Column="1" FontSize="20" PasswordChanged="PasswordBox_PasswordChanged" Opacity="0.7" BorderBrush="Chocolate" BorderThickness="3"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="Chuj"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" 
+                 Style="{DynamicResource TextBoxExtend}" 
+                 hc:InfoElement.Placeholder="Login" 
+                 FontSize="20" 
+                 Text="{Binding UserLogin}" 
+                 Opacity="0.7"
+                 BorderBrush="Chocolate" 
+                 BorderThickness="3"
+                 Padding="15 0 0 0"/>
+        <PasswordBox Grid.Row="3" Grid.Column="1"
+                     Style="{DynamicResource PasswordBoxExtend}" 
+                     hc:InfoElement.Placeholder="Hasło" 
+                     FontSize="20" 
+                     PasswordChanged="PasswordBox_PasswordChanged"
+                     Opacity="0.7" 
+                     BorderBrush="Chocolate" 
+                     BorderThickness="3"
+                     Padding="15 0 0 0"/>
         <Button Grid.Row="5" Grid.Column="1" FontSize="20" MinHeight="50" MinWidth="100" Content="Zaloguj" 
                 Style="{StaticResource ButtonWarning}"
                 Command="{Binding LoginCommand}"/>
