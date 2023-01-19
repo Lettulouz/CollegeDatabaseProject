@@ -20,7 +20,8 @@
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="1" Margin="0 15 0 5">
+        <Border Grid.Row="0" Grid.Column="1" Background="#F9F9F9" BorderBrush="Chocolate" BorderThickness="2" CornerRadius="5" MaxWidth="500" Margin=" 5 30 5 0" Padding="10">
+        <Grid Grid.Row="0" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="0.1*"/>
@@ -46,7 +47,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="Państwo:"/>
+                    Content="Państwo:"
+                    Background="Transparent"/>
                 <Label 
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
@@ -55,7 +57,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="{Binding ChosenCountry, UpdateSourceTrigger=PropertyChanged}"/>
+                    Content="{Binding ChosenCountry, UpdateSourceTrigger=PropertyChanged}"
+                    Background="Transparent"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -71,7 +74,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="Głowa państwa:"/>
+                    Content="Głowa państwa:"
+                    Background="Transparent"/>
                 <Label 
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
@@ -80,7 +84,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="{Binding HeadOfCountry, UpdateSourceTrigger=PropertyChanged}"/>
+                    Content="{Binding HeadOfCountry, UpdateSourceTrigger=PropertyChanged}"
+                    Background="Transparent"/>
             </Grid>
             <Grid Grid.Row="4" Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -96,7 +101,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="Obszar:"/>
+                    Content="Obszar:"
+                    Background="Transparent"/>
                 <Label 
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
@@ -105,7 +111,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="{Binding Territory, UpdateSourceTrigger=PropertyChanged}"/>
+                    Content="{Binding Territory, UpdateSourceTrigger=PropertyChanged}"
+                    Background="Transparent"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -121,7 +128,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="Ludność:"/>
+                    Content="Ludność:"
+                    Background="Transparent"/>
                 <Label 
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
@@ -130,7 +138,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="{Binding Population, UpdateSourceTrigger=PropertyChanged}"/>
+                    Content="{Binding Population, UpdateSourceTrigger=PropertyChanged}"
+                    Background="Transparent"/>
             </Grid>
             <Grid Grid.Row="4" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -146,7 +155,8 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="Hymn:"/>
+                    Content="Hymn:"
+                    Background="Transparent"/>
                 <Label 
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
@@ -155,9 +165,11 @@
                     hc:BorderElement.CornerRadius="4"
                     BorderThickness="0"
                     HorizontalAlignment="Center"
-                    Content="{Binding Anthem, UpdateSourceTrigger=PropertyChanged}"/>
+                    Content="{Binding Anthem, UpdateSourceTrigger=PropertyChanged}"
+                    Background="Transparent"/>
             </Grid>
         </Grid>
+        </Border>
         <Grid Grid.Row="1" Grid.Column="1" Margin="0 0 0 15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -182,7 +194,9 @@
                       ItemsSource="{Binding CurrenciesInCountry, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True" 
                       RowStyle="{StaticResource DataGridUnselectableRowStyle}"
-                      CanUserSortColumns="False">
+                      CanUserSortColumns="False"
+                      BorderBrush="Chocolate"
+                      BorderThickness="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding}" Header="Waluty" 
                                         CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
@@ -199,7 +213,9 @@
                       ItemsSource="{Binding CountryOnContinents, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True" 
                       RowStyle="{StaticResource DataGridUnselectableRowStyle}"
-                      CanUserSortColumns="False">
+                      CanUserSortColumns="False"
+                      BorderBrush="Chocolate"
+                      BorderThickness="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding }" Header="Kontynenty" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
                 </DataGrid.Columns>
@@ -214,7 +230,9 @@
                       ItemsSource="{Binding PopulationByNationality, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True" 
                       RowStyle="{StaticResource DataGridUnselectableRowStyle}"
-                      CanUserSortColumns="False">
+                      CanUserSortColumns="False"
+                      BorderBrush="Chocolate"
+                      BorderThickness="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding}" Header="Populacja wg. narodowości" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
                 </DataGrid.Columns>
@@ -229,7 +247,9 @@
                       ItemsSource="{Binding CapitalsOfCountry, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True" 
                       RowStyle="{StaticResource DataGridUnselectableRowStyle}"
-                      CanUserSortColumns="False">
+                      CanUserSortColumns="False"
+                      BorderBrush="Chocolate"
+                      BorderThickness="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding}" Header="Stolice państwa" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
                 </DataGrid.Columns>
@@ -244,7 +264,9 @@
                       ItemsSource="{Binding OfficialLanguages, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True" 
                       RowStyle="{StaticResource DataGridUnselectableRowStyle}"
-                      CanUserSortColumns="False">
+                      CanUserSortColumns="False"
+                      BorderBrush="Chocolate"
+                      BorderThickness="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding }" Header="Język oficjalny" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
                 </DataGrid.Columns>
@@ -259,7 +281,9 @@
                       ItemsSource="{Binding ForeignLanguages, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True" 
                       RowStyle="{StaticResource DataGridUnselectableRowStyle}"
-                      CanUserSortColumns="False">
+                      CanUserSortColumns="False"
+                      BorderBrush="Chocolate"
+                      BorderThickness="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding }" Header="Języki obce" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
                 </DataGrid.Columns>
@@ -274,7 +298,9 @@
                       ItemsSource="{Binding PopulationByFaith, UpdateSourceTrigger=PropertyChanged}"
                       IsReadOnly="True" 
                       RowStyle="{StaticResource DataGridUnselectableRowStyle}"
-                      CanUserSortColumns="False">
+                      CanUserSortColumns="False"
+                      BorderBrush="Chocolate"
+                      BorderThickness="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding }" Header="Ludność wg. wiary" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
                 </DataGrid.Columns>
