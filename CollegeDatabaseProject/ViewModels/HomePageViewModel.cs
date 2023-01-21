@@ -168,12 +168,9 @@ public class HomePageViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
-    public ICommand AddOneCommand { get; }
 
     public HomePageViewModel()
     {
-        AddOneCommand = new AddOneCommand(this);
     }
 
     public void FillFieldsWithDb(string? countryName)

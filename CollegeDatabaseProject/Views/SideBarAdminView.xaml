@@ -1,0 +1,48 @@
+<UserControl x:Class="CollegeDatabaseProject.Views.SideBarAdminView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CollegeDatabaseProject.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" BorderBrush="Chocolate" BorderThickness="0 0 5 0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBox Grid.Row="1" Margin="10 10 10 0" Text="{Binding SearchField}"></TextBox>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Wszystkie" 
+                    Command="{Binding ReloadButtonCommand}"
+                    Style="{StaticResource ButtonPrimary}"/>
+            <Button Grid.Column="1" Content="Szukaj" 
+                    Command="{Binding SearchButtonCommand}"
+                    Style="{StaticResource ButtonSuccess}"/>
+        </Grid>
+        <DataGrid Grid.Row="3" 
+                  Grid.Column="0" 
+                  Margin="10"
+                  ColumnHeaderHeight="60" 
+                  ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
+                  HeadersVisibility="All" AutoGenerateColumns="False" 
+                  ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectionMode="Single"
+                  IsReadOnly="True"
+                  CurrentItem="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Binding="{Binding}" Header="Kraje" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

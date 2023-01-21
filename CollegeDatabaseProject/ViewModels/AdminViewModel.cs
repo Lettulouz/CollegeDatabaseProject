@@ -32,11 +32,14 @@ public class AdminViewModel : ViewModelBase
     private string? _chosenCountry = "";
     private string _textInput1;
     private string _textInput2;
-    private string _textInput3;
+    private string _textInput31;
+    private string _textInput32;
     private string _textInput4;
     private string _textInput5;
-    private string _textInput6;
-    private string _textInput7;
+    private string _textInput61;
+    private double _textInput62;
+    private string _textInput71;
+    private double _textInput72;
 
     public string? ChosenCountry
     {
@@ -194,12 +197,21 @@ public class AdminViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    public string TextInput3
+    public string TextInput31
     {
-        get => _textInput3;
+        get => _textInput31;
         set
         {
-            _textInput3 = value; 
+            _textInput31 = value; 
+            OnPropertyChanged();
+        }
+    }
+    public string TextInput32
+    {
+        get => _textInput32;
+        set
+        {
+            _textInput32 = value; 
             OnPropertyChanged();
         }
     }
@@ -221,21 +233,39 @@ public class AdminViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    public string TextInput6
+    public string TextInput61
     {
-        get => _textInput6;
+        get => _textInput61;
         set
         {
-            _textInput6 = value; 
+            _textInput61 = value; 
             OnPropertyChanged();
         }
     }
-    public string TextInput7
+    public double TextInput62
     {
-        get => _textInput7;
+        get => _textInput62;
         set
         {
-            _textInput7 = value; 
+            _textInput62 = value; 
+            OnPropertyChanged();
+        }
+    }
+    public string TextInput71
+    {
+        get => _textInput71;
+        set
+        {
+            _textInput71 = value; 
+            OnPropertyChanged();
+        }
+    }
+    public double TextInput72
+    {
+        get => _textInput72;
+        set
+        {
+            _textInput72 = value; 
             OnPropertyChanged();
         }
     }

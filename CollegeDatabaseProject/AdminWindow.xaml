@@ -14,8 +14,8 @@
         <DataTemplate DataType="{x:Type viewModels:TopBarViewModel}">
             <views:TopBarView DataContext="{Binding}"></views:TopBarView>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModels:SideBarViewModel}">
-            <views:SideBarView DataContext="{Binding}"></views:SideBarView>
+        <DataTemplate DataType="{x:Type viewModels:SideBarAdminViewModel}">
+            <views:SideBarAdminView DataContext="{Binding}"></views:SideBarAdminView>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModels:AdminViewModel}">
             <views:AdminView DataContext="{Binding}"></views:AdminView>

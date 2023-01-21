@@ -1,4 +1,3 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CollegeDatabaseProject.Commands;
@@ -6,7 +5,7 @@ using MySqlConnector;
 
 namespace CollegeDatabaseProject.ViewModels;
 
-public class SideBarViewModel : ViewModelBase
+public class SideBarAdminViewModel : ViewModelBase
 {
     private MainViewModel _mainViewModel;
     private HomePageViewModel _homePageViewModel;
@@ -67,13 +66,12 @@ public class SideBarViewModel : ViewModelBase
     public ICommand ReloadButtonCommand { get; }
     public ICommand SearchButtonCommand { get; }
     public ICommand OpenAdminCommand { get; }
-
-    public SideBarViewModel(HomePageViewModel homePageViewModel)
+    
+    public SideBarAdminViewModel(AdminViewModel adminViewModel)
     {
-        _homePageViewModel = homePageViewModel;
+        _adminViewModel = adminViewModel;
         ReloadButtonCommand = new ReloadButtonCommand(this);
         SearchButtonCommand = new SearchButtonCommand(this);
-        OpenAdminCommand = new OpenAdminCommand();;
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
 
         var stm = "Select nazwaPanstwa from panstwo";
@@ -87,7 +85,7 @@ public class SideBarViewModel : ViewModelBase
                 _dataList.Add(output.GetValue(i).ToString());
         }
     }
-    
+
     public void OnPropChange()
     {
         OnPropertyChanged();

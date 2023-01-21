@@ -28,8 +28,8 @@ public class AddToListCommand : CommandBase
                         _adminViewModel.CountryOnContinents.Add(_adminViewModel.TextInput2);
                     break;
                 case "3": 
-                    if(_adminViewModel.TextInput3 != "")
-                        _adminViewModel.PopulationByNationality.Add(_adminViewModel.TextInput3);
+                    if(_adminViewModel.TextInput31 != "")
+                        _adminViewModel.PopulationByNationality.Add(_adminViewModel.TextInput31);
                     break;
                 case "4": 
                     if(_adminViewModel.TextInput4 != "")
@@ -40,12 +40,12 @@ public class AddToListCommand : CommandBase
                         _adminViewModel.OfficialLanguages.Add(_adminViewModel.TextInput5);
                     break;
                 case "6": 
-                    if(_adminViewModel.TextInput6 != "")
-                        _adminViewModel.ForeignLanguages.Add(_adminViewModel.TextInput6);
+                    if(_adminViewModel.TextInput61 != "" || _adminViewModel.TextInput62 != null)
+                        _adminViewModel.ForeignLanguages.Add(_adminViewModel.TextInput61 + " - " + _adminViewModel.TextInput62 + "%");
                     break;
                 case "7": 
-                    if(_adminViewModel.TextInput7!= "")
-                        _adminViewModel.PopulationByFaith.Add(_adminViewModel.TextInput7);
+                    if(_adminViewModel.TextInput1!= "")
+                        _adminViewModel.PopulationByFaith.Add(_adminViewModel.TextInput71);
                     break;
             }
         }

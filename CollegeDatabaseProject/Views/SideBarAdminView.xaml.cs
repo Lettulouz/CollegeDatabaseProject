@@ -1,11 +1,10 @@
 using System.Windows.Controls;
 
-
 namespace CollegeDatabaseProject.Views;
 
-public partial class AdminView : UserControl
+public partial class SideBarAdminView : UserControl
 {
-    public AdminView()
+    public SideBarAdminView()
     {
         InitializeComponent();
     }

@@ -30,7 +30,7 @@ public class LoginCommand : CommandBase
             AdminViewModel adminViewModel = CreateAdminViewModel();
             _navigationStore.CurrentViewModel = adminViewModel;
             _navigationStore.TopBarViewModel = topBarViewModel;
-            _navigationStore.SideBarViewModel = new SideBarViewModel(adminViewModel);
+            _navigationStore.SideBarViewModel = new SideBarAdminViewModel(adminViewModel);
 
             Window test = new AdminWindow()
             {
