@@ -8,7 +8,10 @@ namespace CollegeDatabaseProject.ViewModels;
 
 public class SideBarViewModel : ViewModelBase
 {
+    private MainViewModel _mainViewModel;
     private HomePageViewModel _homePageViewModel;
+
+    private AdminViewModel _adminViewModel;
     
     private ObservableCollection<string?> _dataList = new();
 
@@ -25,10 +28,10 @@ public class SideBarViewModel : ViewModelBase
         {
             _selectedCountry = value;
             OnPropertyChanged();
-            _searchOutputField = _selectedCountry.ToString() ?? throw new InvalidOperationException();
+            if(_selectedCountry !=null || _selectedCountry !="") _searchOutputField = _selectedCountry.ToString();
             OnPropertyChanged(nameof(SearchOutputField));
-            _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
-            
+            if (_homePageViewModel != null) _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
+            if (_adminViewModel != null) _adminViewModel.ChosenCountry = _selectedCountry.ToString();
         }
     }
     public string SearchOutputField
@@ -70,7 +73,26 @@ public class SideBarViewModel : ViewModelBase
         _homePageViewModel = homePageViewModel;
         ReloadButtonCommand = new ReloadButtonCommand(this);
         SearchButtonCommand = new SearchButtonCommand(this);
-        OpenAdminCommand = new OpenAdminCommand(homePageViewModel);;
+        OpenAdminCommand = new OpenAdminCommand();;
+        MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
+
+        var stm = "Select nazwaPanstwa from panstwo";
+        var cmd = new MySqlCommand(stm, con);
+        con.Open();
+        var output = cmd.ExecuteReader();
+        _dataList.Clear();
+        while (output.Read())
+        {
+            for(int i=0; i<output.FieldCount; i++)
+                _dataList.Add(output.GetValue(i).ToString());
+        }
+    }
+    
+    public SideBarViewModel(AdminViewModel adminViewModel)
+    {
+        _adminViewModel = adminViewModel;
+        ReloadButtonCommand = new ReloadButtonCommand(this);
+        SearchButtonCommand = new SearchButtonCommand(this);
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
 
         var stm = "Select nazwaPanstwa from panstwo";

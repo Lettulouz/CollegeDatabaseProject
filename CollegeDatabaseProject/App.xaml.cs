@@ -70,9 +70,10 @@ namespace CollegeDatabaseProject
             
             TopBarViewModel topBarViewModel = new(1);
             topBarViewModel.AppName = "Administrator";
-            _navigationStore.CurrentViewModel = CreateAdminViewModel();
+            AdminViewModel adminViewModel = CreateAdminViewModel();
+            _navigationStore.CurrentViewModel = adminViewModel;
             _navigationStore.TopBarViewModel = topBarViewModel;
-            _navigationStore.SideBarViewModel = new SideBarViewModel(_homePageViewModel);
+            _navigationStore.SideBarViewModel = new SideBarViewModel(adminViewModel);
             Window test = new AdminWindow()
             {
                 DataContext = new MainViewModel(_navigationStore),

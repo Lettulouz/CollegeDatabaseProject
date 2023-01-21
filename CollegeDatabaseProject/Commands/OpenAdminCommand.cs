@@ -8,13 +8,7 @@ namespace CollegeDatabaseProject.Commands;
 public class OpenAdminCommand : CommandBase
 {
     private readonly NavigationStore _navigationStore = new();
-    private readonly HomePageViewModel _homePageViewModel;
-    
-    public OpenAdminCommand(HomePageViewModel homePageViewModel)
-    {
-        _homePageViewModel = homePageViewModel;
-    }
-    
+
     public override void Execute(object? parameter)
     {
         TopBarViewModel topBarViewModel = new(0);
@@ -31,7 +25,7 @@ public class OpenAdminCommand : CommandBase
     
     private LoginViewModel CreateLoginViewModel()
     {
-        LoginViewModel loginViewModel = new(_homePageViewModel);
+        LoginViewModel loginViewModel = new();
         return loginViewModel;
     }
 
