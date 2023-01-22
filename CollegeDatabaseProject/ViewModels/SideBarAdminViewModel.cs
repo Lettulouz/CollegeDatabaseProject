@@ -66,12 +66,14 @@ public class SideBarAdminViewModel : ViewModelBase
     public ICommand ReloadButtonCommand { get; }
     public ICommand SearchButtonCommand { get; }
     public ICommand OpenAdminCommand { get; }
+    public ICommand AddNewCountryCommand { get; }
     
     public SideBarAdminViewModel(AdminViewModel adminViewModel)
     {
         _adminViewModel = adminViewModel;
         ReloadButtonCommand = new ReloadButtonCommand(this);
         SearchButtonCommand = new SearchButtonCommand(this);
+        AddNewCountryCommand = new AddNewCountry(this);
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
 
         var stm = "Select nazwaPanstwa from panstwo";
