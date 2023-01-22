@@ -11,6 +11,7 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
@@ -29,7 +30,10 @@
                     Command="{Binding SearchButtonCommand}"
                     Style="{StaticResource ButtonSuccess}"/>
         </Grid>
-        <DataGrid Grid.Row="3" 
+        <Button Grid.Row="3" Content="Dodaj" 
+                Command="{Binding AddNewCountryCommand}"
+                Style="{StaticResource ButtonInfo}"/>
+        <DataGrid Grid.Row="4" 
                   Grid.Column="0" 
                   Margin="10"
                   ColumnHeaderHeight="60" 
@@ -37,7 +41,6 @@
                   HeadersVisibility="All" AutoGenerateColumns="False" 
                   ItemsSource="{Binding DataList, UpdateSourceTrigger=PropertyChanged}"
                   SelectionMode="Single"
-                  IsReadOnly="True"
                   CurrentItem="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Binding="{Binding}" Header="Kraje" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
