@@ -213,13 +213,12 @@
                       ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
                       HeadersVisibility="All" AutoGenerateColumns="False" 
                       ItemsSource="{Binding CurrenciesInCountry, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" 
-                      RowStyle="{StaticResource DataGridUnselectableRowStyle}"
                       CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding}" Header="Waluty" 
                                         CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
                     </DataGridTextColumn>
+                    <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="0" Grid.Column="1" Margin="5 0 2 5" >
@@ -243,11 +242,10 @@
                       HeadersVisibility="All" 
                       AutoGenerateColumns="False" 
                       ItemsSource="{Binding CountryOnContinents, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" 
-                      RowStyle="{StaticResource DataGridUnselectableRowStyle}"
                       CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding }" Header="Kontynenty" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                    <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="0" Grid.Column="2" Margin="5 0 2 5" >
@@ -271,11 +269,10 @@
                       HeadersVisibility="All" 
                       AutoGenerateColumns="False" 
                       ItemsSource="{Binding PopulationByNationality, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" 
-                      RowStyle="{StaticResource DataGridUnselectableRowStyle}"
                       CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding}" Header="Populacja wg. narodowości" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                    <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="0" Grid.Column="3" Margin="5 0 2 5" >
@@ -299,12 +296,11 @@
                       ColumnHeaderStyle="{StaticResource ColumnHeaderStyle1}" 
                       HeadersVisibility="All" 
                       AutoGenerateColumns="False" 
-                      ItemsSource="{Binding CapitalsOfCountry, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" 
-                      RowStyle="{StaticResource DataGridUnselectableRowStyle}"
+                      ItemsSource="{Binding CapitalsOfCountry, UpdateSourceTrigger=PropertyChanged}" 
                       CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding}" Header="Stolice państwa" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                    <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="0" Grid.Column="4" Margin="5 0 2 5" >
@@ -328,11 +324,10 @@
                       HeadersVisibility="All" 
                       AutoGenerateColumns="False" 
                       ItemsSource="{Binding OfficialLanguages, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" 
-                      RowStyle="{StaticResource DataGridUnselectableRowStyle}"
                       CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding }" Header="Język oficjalny" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                    <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="0" Grid.Column="5" Margin="5 0 2 5" >
@@ -356,11 +351,10 @@
                       HeadersVisibility="All" 
                       AutoGenerateColumns="False" 
                       ItemsSource="{Binding ForeignLanguages, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" 
-                      RowStyle="{StaticResource DataGridUnselectableRowStyle}"
                       CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding }" Header="Języki obce" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                    <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="0" Grid.Column="6" Margin="5 0 2 5" >
@@ -384,11 +378,10 @@
                       HeadersVisibility="All" 
                       AutoGenerateColumns="False" 
                       ItemsSource="{Binding PopulationByFaith, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" 
-                      RowStyle="{StaticResource DataGridUnselectableRowStyle}"
                       CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Binding="{Binding }" Header="Ludność wg. wiary" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
+                    <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Button Grid.Row="7" Grid.Column="3" FontSize="15" Margin=" 10  10" MinHeight="50" MinWidth="50" Content="Zatwierdź" 

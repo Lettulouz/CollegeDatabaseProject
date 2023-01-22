@@ -188,6 +188,20 @@ public class DatabaseModificationCommand :CommandBase
             MessageBox.Show(message);
         }
         
+        CleanInputs();
+    }
 
+    private void CleanInputs()
+    {
+        _adminViewModel.TextInput1 = "";
+        _adminViewModel.TextInput2 = "";
+        _adminViewModel.TextInput31 = "";
+        _adminViewModel.TextInput32 = 0;
+        _adminViewModel.TextInput4 = "";
+        _adminViewModel.TextInput5 = "";
+        _adminViewModel.TextInput61 = "";
+        _adminViewModel.TextInput62 = 0;
+        _adminViewModel.TextInput71 = "";
+        _adminViewModel.TextInput72 = 0;
     }
 }

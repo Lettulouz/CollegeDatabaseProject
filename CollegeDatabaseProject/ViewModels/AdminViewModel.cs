@@ -34,7 +34,7 @@ public class AdminViewModel : ViewModelBase
     private string _textInput1;
     private string _textInput2;
     private string _textInput31;
-    private string _textInput32;
+    private double _textInput32;
     private string _textInput4;
     private string _textInput5;
     private string _textInput61;
@@ -216,7 +216,7 @@ public class AdminViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    public string TextInput32
+    public double TextInput32
     {
         get => _textInput32;
         set
