@@ -28,10 +28,14 @@ public class SideBarViewModel : ViewModelBase
         {
             _selectedCountry = value;
             OnPropertyChanged();
-            if(_selectedCountry !=null || _selectedCountry !="") _searchOutputField = _selectedCountry.ToString();
-            OnPropertyChanged(nameof(SearchOutputField));
-            if (_homePageViewModel != null) _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
-            if (_adminViewModel != null) _adminViewModel.ChosenCountry = _selectedCountry.ToString();
+            if (value != null)
+            {
+                if (_selectedCountry != null || _selectedCountry != "")
+                    _searchOutputField = _selectedCountry.ToString();
+                OnPropertyChanged(nameof(SearchOutputField));
+                if (_homePageViewModel != null) _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
+                if (_adminViewModel != null) _adminViewModel.ChosenCountry = _selectedCountry.ToString();
+            }
         }
     }
     public string SearchOutputField
