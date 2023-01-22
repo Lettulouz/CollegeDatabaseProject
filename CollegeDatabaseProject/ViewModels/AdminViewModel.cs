@@ -62,12 +62,30 @@ public class AdminViewModel : ViewModelBase
         }
     }
     
-    public string? HeadOfCountry
+    public string? HeadOfCountry1
     {
-        get => _country.HeadOfCountry;
+        get => _country.HeadOfCountry1;
         set
         {
-            _country.HeadOfCountry = value;
+            _country.HeadOfCountry1 = value;
+            OnPropertyChanged();
+        }
+    } 
+    public string? HeadOfCountry2
+    {
+        get => _country.HeadOfCountry2;
+        set
+        {
+            _country.HeadOfCountry2 = value;
+            OnPropertyChanged();
+        }
+    } 
+    public string? HeadOfCountry3
+    {
+        get => _country.HeadOfCountry3;
+        set
+        {
+            _country.HeadOfCountry3 = value;
             OnPropertyChanged();
         }
     }
@@ -443,22 +461,27 @@ public class AdminViewModel : ViewModelBase
         var output9 = cmd9.ExecuteScalar();
         con.Close();
         Territory = "";
-        if (output9 != null) Territory = output9.ToString();
+        if (output9 != null) 
+            Territory = output9.ToString();
 
         //---------------------------
         
-        var stm10 = "Select CONCAT(tgp.tytul, ' ', gp.imie, ' ', gp.nazwisko) from glowapanstwa as gp " +
+        var stm10 = "Select tgp.tytul, gp.imie, gp.nazwisko from glowapanstwa as gp " +
                     "INNER JOIN tytulyglowpanstw as tgp ON gp.id_tytulu=tgp.id " +
                     "INNER JOIN panstwo as p ON gp.id_panstwa=p.id " +
                     "WHERE nazwaPanstwa=@nazwaPanstwa";
         var cmd10 = new MySqlCommand(stm10, con);
         cmd10.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         con.Open();
-        var output10 = cmd10.ExecuteScalar();
+        var output10 = cmd10.ExecuteReader();
+        while(output10.Read())
+        {
+            HeadOfCountry1 = output10.GetValue(0).ToString();
+            HeadOfCountry2 = output10.GetValue(1).ToString();
+            HeadOfCountry3 = output10.GetValue(2).ToString();
+        }
         con.Close();
-        HeadOfCountry = "Nie podano";
-        if(output10 != null)
-            HeadOfCountry = output10.ToString();
+
         
         //---------------------------
         

@@ -13,6 +13,11 @@ public class Country
     public ObservableCollection<string?> ForeignLanguages { get; }
     public ObservableCollection<string?> PopulationByFaith  { get; }
     public string? HeadOfCountry { get; set; }
+    
+    public string? HeadOfCountry1 { get; set; }
+    public string? HeadOfCountry2 { get; set; }
+    public string? HeadOfCountry3 { get; set; }
+    
     public string? Population { get; set; }
     public string? Territory { get; set; }
     public string? Anthem { get; set; }
@@ -20,6 +25,9 @@ public class Country
     public Country()
     {
         HeadOfCountry = "";
+        HeadOfCountry1 = "";
+        HeadOfCountry2 = "";
+        HeadOfCountry3 = "";
         Population = "";
         Territory = "";
         Anthem = "";

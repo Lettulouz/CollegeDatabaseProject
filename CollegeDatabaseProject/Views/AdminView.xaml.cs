@@ -1,9 +1,8 @@
-using System.Windows.Controls;
-
+using HandyControl.Controls;
 
 namespace CollegeDatabaseProject.Views;
 
-public partial class AdminView : UserControl
+public partial class AdminView 
 {
     
     public AdminView()
