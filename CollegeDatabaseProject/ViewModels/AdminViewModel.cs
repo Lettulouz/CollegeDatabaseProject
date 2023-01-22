@@ -16,17 +16,17 @@ public class AdminViewModel : ViewModelBase
 
     public static double FontSize
     {
-        get => 14;
+        get => 12;
     }
     
     public static double MinHeightLabelOrButton
     {
-        get => 50;
+        get => 20;
     }
     
     public static double MinWidthLabelOrButton
     {
-        get => 100;
+        get => 150;
     }
     
     private string? _chosenCountry = "";
@@ -436,7 +436,7 @@ public class AdminViewModel : ViewModelBase
         
         //---------------------------
         
-        var stm9 = "Select CONCAT(obszar, ' km²') from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
+        var stm9 = "Select obszar from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
         var cmd9 = new MySqlCommand(stm9, con);
         cmd9.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         con.Open();
