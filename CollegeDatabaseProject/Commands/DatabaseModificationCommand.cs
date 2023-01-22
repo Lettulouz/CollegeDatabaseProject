@@ -199,18 +199,63 @@ public class DatabaseModificationCommand :CommandBase
         con.Close();
         //==================================
         
-      //  IEnumerable<string> diff = _adminViewModel.CapitalsOfCountry.Except(_capitalAll);
-     //   if(diff.Count()>0)
-     //   {
-            var message = string.Join(Environment.NewLine,_religionAll);
-            MessageBox.Show(message);
-     //   }
+        // Pobranie danych z widoku dla walut
+        IEnumerable<string> diffCurrencies = _adminViewModel.CurrenciesInCountry.Except(_currenciesAll);
+        /*
+        * Wstawianie danych walut do tabeli statycznej i łączącej
+        */
+        var result = diffCurrencies.ToList();
+        foreach (var item in result)
+        {
+            var stm10 = "Select skrot from waluty WHERE skrot = @skrotWaluty";
+            var cmd10 = new MySqlCommand(stm10, con);
+            cmd10.Parameters.AddWithValue("@skrotWaluty", item);
+            con.Open();
+            var output10 = cmd10.ExecuteScalar();
+            con.Close();
 
-
-  
- 
+            
+            if (!item.Contains(output10.ToString()))
+            {
+                var stm8 = "INSERT INTO waluty(skrot) VALUES(@skrotWaluty)";
+                var cmd8 = new MySqlCommand(stm8, con);
+                cmd8.Parameters.AddWithValue("@skrotWaluty", item);
+                con.Open();
+                cmd8.ExecuteNonQuery();
+                con.Close();
+                long currency = cmd8.LastInsertedId;
+                var stm9 = "INSERT INTO walutypanstwa(id_panstwa, id_waluty) VALUES(@idPanstwa, @idCurrency)";
+                var cmd9 = new MySqlCommand(stm9, con);
+                cmd9.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                cmd9.Parameters.AddWithValue("@idCurrency", currency);
+                con.Open();
+                cmd9.ExecuteNonQuery();
+                con.Close();
+            }
+            else
+            {
+                var stm11 = "Select id from waluty WHERE skrot = @skrotWaluty";
+                var cmd11 = new MySqlCommand(stm11, con);
+                cmd11.Parameters.AddWithValue("@skrotWaluty", item);
+                con.Open();
+                var output11 = cmd11.ExecuteScalar();
+                con.Close();
+                var stm12 = "INSERT INTO walutypanstwa(id_panstwa, id_waluty) VALUES(@idPanstwa, @idCurrency)";
+                var cmd12 = new MySqlCommand(stm12, con);
+                cmd12.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                cmd12.Parameters.AddWithValue("@idCurrency", output11);
+                con.Open();
+                cmd12.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+        //==================================
         
-        CleanInputs();
+ 
+
+
+
+            CleanInputs();
     }
 
     private void CleanInputs()
