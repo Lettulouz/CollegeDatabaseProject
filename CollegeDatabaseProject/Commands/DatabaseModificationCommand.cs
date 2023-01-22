@@ -48,10 +48,10 @@ public class DatabaseModificationCommand :CommandBase
         //==================================
 
         /*
-         * Pobieranie wszystkich danych z tabeli waluty
+         * Pobieranie danych z tabeli waluty
          */
-        var stm1 = "Select id_waluty from walutypanstwa " +
-                   "WHERE id_panstwa=@idPanstwa";
+        var stm1 = "Select w.skrot from walutypanstwa wp INNER JOIN waluty w ON w.id = wp.id_waluty " +
+                   "WHERE wp.id_panstwa=@idPanstwa";
         var cmd1 = new MySqlCommand(stm1, con);
         cmd1.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
         con.Open();
@@ -68,10 +68,14 @@ public class DatabaseModificationCommand :CommandBase
         //==================================
         
         /*
-         * Pobieranie wszystkich danych z tabeli kontynenty
+         * Pobieranie danych z tabeli kontynenty
          */
-        var stm2 = "Select id from kontynenty";
+        var stm2 = "Select k.nazwaKontynentu from panstwokontynent AS pk " +
+                   "INNER JOIN kontynenty AS k ON pk.id_kontynentu=k.id " +
+                   "INNER JOIN panstwo AS p ON p.id=pk.id_panstwa " +
+                   "WHERE p.id=@idPanstwa";;
         var cmd2 = new MySqlCommand(stm2, con);
+        cmd2.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
         con.Open();
         var output2 = cmd2.ExecuteReader();
         _continentsAll.Clear();
@@ -86,10 +90,12 @@ public class DatabaseModificationCommand :CommandBase
         //==================================
         
         /*
-        * Pobieranie wszystkich danych z tabeli kontynenty
+        * Pobieranie danych z tabeli narodowosci panstwa
         */
-        var stm3 = "Select id_narodowosci, liczebnosc from ludnoscwgnarodowosci " +
-                   "WHERE id_panstwa=@idPanstwa";
+        var stm3 = "Select n.nazwa from ludnoscwgnarodowosci AS ln " +
+                   "INNER JOIN narodowosc AS n ON ln.id_narodowosci=n.id " +
+                   "INNER JOIN panstwo AS p ON p.id=ln.id_panstwa " +
+                   "WHERE p.id=@idPanstwa ORDER BY ln.liczebnosc DESC";
         var cmd3 = new MySqlCommand(stm3, con);
         cmd3.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
         con.Open();
@@ -106,9 +112,12 @@ public class DatabaseModificationCommand :CommandBase
         //==================================
         
         /*
-        * Pobieranie wszystkich danych z tabeli stolice danego panstwa
+        * Pobieranie danych z tabeli stolice danego panstwa
         */
-        var stm4 = "Select id_stolicy from stolicapanstwa WHERE id_panstwa=@idPanstwa";
+        var stm4 = "Select s.nazwa from stolicapanstwa AS sp " +
+                   "INNER JOIN stolice AS s ON sp.id_stolicy=s.id " +
+                   "INNER JOIN panstwo AS p ON p.id=sp.id_panstwa " +
+                   "WHERE p.id=@idPanstwa";
         var cmd4 = new MySqlCommand(stm4, con);
         cmd4.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
         con.Open();
@@ -125,9 +134,12 @@ public class DatabaseModificationCommand :CommandBase
         //==================================
         
         /*
-        * Pobieranie wszystkich danych z tabeli jezyk oficjalny panstwa
+        * Pobieranie danych z tabeli jezyk oficjalny panstwa
         */
-        var stm5 = "Select id_jezyka from jezykoficjalny WHERE id_panstwa=@idPanstwa";
+        var stm5 = "Select j.nazwa from jezykoficjalny AS jo " +
+                   "INNER JOIN jezyki AS j ON jo.id_jezyka=j.id " +
+                   "INNER JOIN panstwo AS p ON p.id=jo.id_panstwa " +
+                   "WHERE p.id=@idPanstwa";
         var cmd5 = new MySqlCommand(stm5, con);
         cmd5.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
         con.Open();
@@ -144,9 +156,12 @@ public class DatabaseModificationCommand :CommandBase
         //==================================
         
         /*
-        * Pobieranie wszystkich danych z tabeli jezyk oficjalny panstwa
+        * Pobieranie danych z tabeli jezyk obcy panstwa
         */
-        var stm6 = "Select id_jezyka from jezykobcy WHERE id_panstwa=@idPanstwa";
+        var stm6 = "Select j.nazwa from jezykobcy AS jo " +
+                   "INNER JOIN jezyki AS j ON jo.id_jezyka=j.id " +
+                   "INNER JOIN panstwo AS p ON p.id=jo.id_panstwa " +
+                   "WHERE p.id=@idPanstwa ORDER BY jo.procent DESC";
         var cmd6 = new MySqlCommand(stm6, con);
         cmd6.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
         con.Open();
@@ -163,9 +178,12 @@ public class DatabaseModificationCommand :CommandBase
         //==================================
         
         /*
-        * Pobieranie wszystkich danych z tabeli wiara ludnosci
+        * Pobieranie danych z tabeli wiara ludnosci
         */
-        var stm7 = "Select id_wiary from ludnoscwgwierzen WHERE id_panstwa=@idPanstwa";
+        var stm7 = "Select w.nazwa from ludnoscwgwierzen AS lw " +
+                   "INNER JOIN wiary AS w ON lw.id_wiary=w.id " +
+                   "INNER JOIN panstwo AS p ON p.id=lw.id_panstwa " +
+                   "WHERE p.id=@idPanstwa ORDER BY lw.liczebnosc DESC";
         var cmd7 = new MySqlCommand(stm7, con);
         cmd7.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
         con.Open();
@@ -181,12 +199,16 @@ public class DatabaseModificationCommand :CommandBase
         con.Close();
         //==================================
         
-        IEnumerable<string> diffCurrencies = _adminViewModel.CurrenciesInCountry.Except(_currenciesAll);
-        if(diffCurrencies.Count()>0)
-        {
-            var message = string.Join(Environment.NewLine,diffCurrencies);
+      //  IEnumerable<string> diff = _adminViewModel.CapitalsOfCountry.Except(_capitalAll);
+     //   if(diff.Count()>0)
+     //   {
+            var message = string.Join(Environment.NewLine,_religionAll);
             MessageBox.Show(message);
-        }
+     //   }
+
+
+  
+ 
         
         CleanInputs();
     }
