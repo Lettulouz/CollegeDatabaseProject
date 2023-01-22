@@ -19,7 +19,7 @@
             </VisualBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.25*"/>
+            <RowDefinition Height="1.75*"/>
             <RowDefinition Height="3.5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -27,7 +27,7 @@
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" Grid.Column="1" Background="#F9F9F9" BorderBrush="Chocolate" BorderThickness="2" CornerRadius="5" MaxWidth="500" Margin=" 5 30 5 15" Padding="10">
+        <Border Grid.Row="0" Grid.Column="1" Background="#F9F9F9" BorderBrush="Chocolate" BorderThickness="2" CornerRadius="5" MaxWidth="500" Margin=" 5 10 5 10" Padding="10">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -57,23 +57,27 @@
                     HorizontalAlignment="Center"
                     Background="Transparent"
                     Content="Państwo:"/>
-                <Label 
+                <TextBox
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
                     MinHeight="{Binding MinHeightLabelOrButton}"
                     MinWidth="{Binding MinWidthLabelOrButton}"
                     hc:BorderElement.CornerRadius="4"
-                    BorderThickness="0"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    Content="{Binding ChosenCountry, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding ChosenCountry, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Grid.ColumnSpan="3" 
                     Grid.Row="0" 
                     FontSize="{Binding FontSize}"
                     FontWeight="Bold"
@@ -84,16 +88,33 @@
                     HorizontalAlignment="Center"
                     Background="Transparent"
                     Content="Głowa państwa:"/>
-                <Label 
+                <TextBox Grid.Column="0"
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
                     MinHeight="{Binding MinHeightLabelOrButton}"
-                    MinWidth="{Binding MinWidthLabelOrButton}"
+                    MinWidth="75"
                     hc:BorderElement.CornerRadius="4"
-                    BorderThickness="0"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    Content="{Binding HeadOfCountry, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding HeadOfCountry, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="1"
+                         Grid.Row="1" 
+                         FontSize="{Binding FontSize}"
+                         MinHeight="{Binding MinHeightLabelOrButton}"
+                         MinWidth="75"
+                         hc:BorderElement.CornerRadius="4"
+                         HorizontalAlignment="Center"
+                         Background="Transparent"
+                         Text="{Binding HeadOfCountry, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="2"
+                         Grid.Row="1" 
+                         FontSize="{Binding FontSize}"
+                         MinHeight="{Binding MinHeightLabelOrButton}"
+                         MinWidth="75"
+                         hc:BorderElement.CornerRadius="4"
+                         HorizontalAlignment="Center"
+                         Background="Transparent"
+                         Text="{Binding HeadOfCountry, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <Grid Grid.Row="4" Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -111,16 +132,15 @@
                     HorizontalAlignment="Center"
                     Background="Transparent"
                     Content="Obszar:"/>
-                <Label 
+                <TextBox
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
                     MinHeight="{Binding MinHeightLabelOrButton}"
                     MinWidth="{Binding MinWidthLabelOrButton}"
                     hc:BorderElement.CornerRadius="4"
-                    BorderThickness="0"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    Content="{Binding Territory, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding Territory, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -138,16 +158,15 @@
                     HorizontalAlignment="Center"
                     Background="Transparent"
                     Content="Ludność:"/>
-                <Label 
+                <TextBox 
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
                     MinHeight="{Binding MinHeightLabelOrButton}"
                     MinWidth="{Binding MinWidthLabelOrButton}"
                     hc:BorderElement.CornerRadius="4"
-                    BorderThickness="0"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    Content="{Binding Population, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding Population, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <Grid Grid.Row="4" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -165,16 +184,15 @@
                     HorizontalAlignment="Center"
                     Background="Transparent"
                     Content="Hymn:"/>
-                <Label 
+                <TextBox
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
                     MinHeight="{Binding MinHeightLabelOrButton}"
                     MinWidth="{Binding MinWidthLabelOrButton}"
                     hc:BorderElement.CornerRadius="4"
-                    BorderThickness="0"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    Content="{Binding Anthem, UpdateSourceTrigger=PropertyChanged}"/>
+                    Text="{Binding Anthem, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </Grid>
         </Border>
