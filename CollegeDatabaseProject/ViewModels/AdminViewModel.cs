@@ -30,6 +30,7 @@ public class AdminViewModel : ViewModelBase
     }
     
     private string? _chosenCountry = "";
+    private int? _idChosenCountry;
     private string _textInput1;
     private string _textInput2;
     private string _textInput31;
@@ -48,6 +49,15 @@ public class AdminViewModel : ViewModelBase
         {
             _chosenCountry = value;
             FillFieldsWithDb(_chosenCountry);
+            OnPropertyChanged();
+        }
+    }
+    public int? IdChosenCountry
+    {
+        get => _idChosenCountry;
+        set
+        {
+            _idChosenCountry = value;
             OnPropertyChanged();
         }
     }
@@ -271,9 +281,11 @@ public class AdminViewModel : ViewModelBase
     }
     
     public ICommand AddToListCommand { get; }
-
+    public ICommand DatabaseModificationCommand { get; }
+    
     public AdminViewModel()
     {
+        DatabaseModificationCommand = new DatabaseModificationCommand(this);
         AddToListCommand = new AddToListCommand(this);
     }
     
@@ -292,7 +304,8 @@ public class AdminViewModel : ViewModelBase
         var output = cmd.ExecuteScalar();
         tr.Commit();
         con.Close();
-        
+        _idChosenCountry = (int?)output;
+        OnPropertyChanged(nameof(IdChosenCountry));
         //---------------------------
         
         var stm2 = "Select w.skrot from walutypanstwa AS wp " +
