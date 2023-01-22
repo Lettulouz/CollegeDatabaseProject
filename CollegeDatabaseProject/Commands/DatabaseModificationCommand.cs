@@ -198,13 +198,13 @@ public class DatabaseModificationCommand :CommandBase
         }
         con.Close();
         //==================================
-        
         // Pobranie danych z widoku dla walut
         IEnumerable<string> diffCurrencies = _adminViewModel.CurrenciesInCountry.Except(_currenciesAll);
         /*
         * Wstawianie danych walut do tabeli statycznej i łączącej
         */
         var result = diffCurrencies.ToList();
+        int addNew = 0;
         foreach (var item in result)
         {
             var stm10 = "Select skrot from waluty WHERE skrot = @skrotWaluty";
@@ -213,12 +213,13 @@ public class DatabaseModificationCommand :CommandBase
             con.Open();
             var output10 = cmd10.ExecuteScalar();
             con.Close();
+            addNew = 0;
                 if (output10 == null)
                 {
-                    output10 = "brak";
+                    addNew = 1;
                 }
 
-                if (!item.Contains(output10.ToString()))
+                if (addNew.Equals(1) || !item.Contains(output10.ToString()))
                 {
                     var stm8 = "INSERT INTO waluty(skrot) VALUES(@skrotWaluty)";
                     var cmd8 = new MySqlCommand(stm8, con);
@@ -252,6 +253,7 @@ public class DatabaseModificationCommand :CommandBase
                     con.Close();
                 }
         }
+        _adminViewModel.FillFieldsWithDb(_adminViewModel.ChosenCountry);
         //==================================
         
  

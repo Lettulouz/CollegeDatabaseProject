@@ -16,7 +16,7 @@ public class SideBarAdminViewModel : ViewModelBase
 
     private string _searchField = "";
 
-    private object _selectedCountry = "Polska";
+    private object _selectedCountry = new();
 
     private string _searchOutputField = "";
 
@@ -27,10 +27,13 @@ public class SideBarAdminViewModel : ViewModelBase
         {
             _selectedCountry = value;
             OnPropertyChanged();
-            if(_selectedCountry !=null || _selectedCountry !="") _searchOutputField = _selectedCountry.ToString();
-            OnPropertyChanged(nameof(SearchOutputField));
-            if (_homePageViewModel != null) _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
-            if (_adminViewModel != null) _adminViewModel.ChosenCountry = _selectedCountry.ToString();
+            if (value != null)
+            {
+                _searchOutputField = _selectedCountry.ToString();
+                OnPropertyChanged(nameof(SearchOutputField));
+                if (_homePageViewModel != null) _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
+                if (_adminViewModel != null) _adminViewModel.ChosenCountry = _selectedCountry.ToString();
+            }
         }
     }
     public string SearchOutputField
