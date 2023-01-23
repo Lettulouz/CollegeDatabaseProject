@@ -21,6 +21,7 @@ public class DatabaseModificationCommand :CommandBase
     private ObservableCollection<string?> _langForeignllAll = new ();
     private ObservableCollection<string?> _religionAll = new ();
     private ObservableCollection<string?> _nationalityTemp = new ();
+    private ObservableCollection<string?> _LanguageForeignTemp = new ();
     public DatabaseModificationCommand(AdminViewModel adminViewModel)
     {
         _adminViewModel = adminViewModel;
@@ -160,7 +161,7 @@ public class DatabaseModificationCommand :CommandBase
         /*
         * Pobieranie danych z tabeli jezyk obcy panstwa
         */
-        var stm6 = "Select j.nazwa from jezykobcy AS jo " +
+        var stm6 = "Select CONCAT(j.nazwa, ' - ', jo.procent, '%') from jezykobcy jo " +
                    "INNER JOIN jezyki AS j ON jo.id_jezyka=j.id " +
                    "INNER JOIN panstwo AS p ON p.id=jo.id_panstwa " +
                    "WHERE p.id=@idPanstwa ORDER BY jo.procent DESC";
@@ -288,10 +289,10 @@ public class DatabaseModificationCommand :CommandBase
                     cmd14.ExecuteNonQuery();
                     con.Close();
                     long continent = cmd14.LastInsertedId;
-                    var stm15 = "INSERT INTO panstwokontynent(id_panstwa, id_kontynentu) VALUES(@idPanstwa, @nazwaKontynentu)";
+                    var stm15 = "INSERT INTO panstwokontynent(id_panstwa, id_kontynentu) VALUES(@idPanstwa, @idKontynentu)";
                     var cmd15 = new MySqlCommand(stm15, con);
                     cmd15.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
-                    cmd15.Parameters.AddWithValue("@nazwaKontynentu", continent);
+                    cmd15.Parameters.AddWithValue("@idKontynentu", continent);
                     con.Open();
                     cmd15.ExecuteNonQuery();
                     con.Close();
@@ -304,10 +305,10 @@ public class DatabaseModificationCommand :CommandBase
                     con.Open();
                     var output16 = cmd16.ExecuteScalar();
                     con.Close();
-                    var stm17 = "INSERT INTO panstwokontynent(id_panstwa, id_kontynentu) VALUES(@idPanstwa, @nazwaKontynentu)";
+                    var stm17 = "INSERT INTO panstwokontynent(id_panstwa, id_kontynentu) VALUES(@idPanstwa, @idKontynentu)";
                     var cmd17 = new MySqlCommand(stm17, con);
                     cmd17.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
-                    cmd17.Parameters.AddWithValue("@nazwaKontynentu", output16);
+                    cmd17.Parameters.AddWithValue("@idKontynentu", output16);
                     con.Open();
                     cmd17.ExecuteNonQuery();
                     con.Close();
@@ -316,8 +317,6 @@ public class DatabaseModificationCommand :CommandBase
         //==================================
         
         // Pobranie danych z widoku dla populacji wg narodowości
-
-        
         IEnumerable<string> diffNationality = _adminViewModel.PopulationByNationality.Except(_nationalityAll);
         /*
         * Wstawianie danych populacji wg narodowości do tabeli statycznej i łączącej
@@ -396,7 +395,198 @@ public class DatabaseModificationCommand :CommandBase
         }
         //==================================
         
+        // Pobranie danych z widoku dla stolic
+        IEnumerable<string> diffCapitals = _adminViewModel.CapitalsOfCountry.Except(_capitalAll);
+        /*
+        * Wstawianie danych stolic do tabeli statycznej i łączącej
+        */
+        var result3 = diffCapitals.ToList();
+        int addNew3 = 0;
+        foreach (var item in result3)
+        {
+            var stm23 = "Select nazwa from stolice WHERE nazwa = @nazwaStolicy";
+            var cmd23 = new MySqlCommand(stm23, con);
+            cmd23.Parameters.AddWithValue("@nazwaStolicy", item);
+            con.Open();
+            var output23 = cmd23.ExecuteScalar();
+            con.Close();
+            addNew3 = 0;
+                if (output23 == null)
+                {
+                    addNew3 = 1;
+                }
+
+                if (addNew3.Equals(1) || !item.Contains(output23.ToString()))
+                {
+                    var stm24 = "INSERT INTO stolice(nazwa) VALUES(@nazwaStolicy)";
+                    var cmd24 = new MySqlCommand(stm24, con);
+                    cmd24.Parameters.AddWithValue("@nazwaStolicy", item);
+                    con.Open();
+                    cmd24.ExecuteNonQuery();
+                    con.Close();
+                    long capital = cmd24.LastInsertedId;
+                    var stm25 = "INSERT INTO stolicapanstwa(id_panstwa, id_stolicy) VALUES(@idPanstwa, @idStolicy)";
+                    var cmd25 = new MySqlCommand(stm25, con);
+                    cmd25.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    cmd25.Parameters.AddWithValue("@idStolicy", capital);
+                    con.Open();
+                    cmd25.ExecuteNonQuery();
+                    con.Close();
+                }
+                else
+                {
+                    var stm26 = "Select id from stolice WHERE nazwa = @nazwaStolicy";
+                    var cmd26 = new MySqlCommand(stm26, con);
+                    cmd26.Parameters.AddWithValue("@nazwaStolicy", item);
+                    con.Open();
+                    var output26 = cmd26.ExecuteScalar();
+                    con.Close();
+                    var stm27 = "INSERT INTO stolicapanstwa(id_panstwa, id_stolicy) VALUES(@idPanstwa, @idStolicy)";
+                    var cmd27 = new MySqlCommand(stm27, con);
+                    cmd27.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    cmd27.Parameters.AddWithValue("@idStolicy", output26);
+                    con.Open();
+                    cmd27.ExecuteNonQuery();
+                    con.Close();
+                }
+        }
+        //==================================
         
+        // Pobranie danych z widoku dla języka oficialnego
+        IEnumerable<string> diffLanguageOff = _adminViewModel.OfficialLanguages.Except(_langOfficiallAll);
+        /*
+        * Wstawianie danych języka oficialnego do tabeli statycznej i łączącej
+        */
+        var result4 = diffLanguageOff.ToList();
+        int addNew4 = 0;
+        foreach (var item in result4)
+        {
+            var stm28 = "Select nazwa from jezyki WHERE nazwa = @nazwaJezykaOff";
+            var cmd28 = new MySqlCommand(stm28, con);
+            cmd28.Parameters.AddWithValue("@nazwaJezykaOff", item);
+            con.Open();
+            var output28 = cmd28.ExecuteScalar();
+            con.Close();
+            addNew4 = 0;
+                if (output28 == null)
+                {
+                    addNew4 = 1;
+                }
+
+                if (addNew4.Equals(1) || !item.Contains(output28.ToString()))
+                {
+                    var stm29 = "INSERT INTO jezyki(nazwa) VALUES(@nazwaJezykaOff)";
+                    var cmd29 = new MySqlCommand(stm29, con);
+                    cmd29.Parameters.AddWithValue("@nazwaJezykaOff", item);
+                    con.Open();
+                    cmd29.ExecuteNonQuery();
+                    con.Close();
+                    long LanguageOfficial = cmd29.LastInsertedId;
+                    var stm30 = "INSERT INTO jezykoficjalny(id_panstwa, id_jezyka) VALUES(@idPanstwa, @idJezykaOff)";
+                    var cmd30 = new MySqlCommand(stm30, con);
+                    cmd30.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    cmd30.Parameters.AddWithValue("@idJezykaOff", LanguageOfficial);
+                    con.Open();
+                    cmd30.ExecuteNonQuery();
+                    con.Close();
+                }
+                else
+                {
+                    var stm31 = "Select id from jezyki WHERE nazwa = @nazwaJezykaOff";
+                    var cmd31 = new MySqlCommand(stm31, con);
+                    cmd31.Parameters.AddWithValue("@nazwaJezykaOff", item);
+                    con.Open();
+                    var output31 = cmd31.ExecuteScalar();
+                    con.Close();
+                    var stm32 = "INSERT INTO jezykoficjalny(id_panstwa, id_jezyka) VALUES(@idPanstwa, @idJezykaOff)";
+                    var cmd32 = new MySqlCommand(stm32, con);
+                    cmd32.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    cmd32.Parameters.AddWithValue("@idJezykaOff", output31);
+                    con.Open();
+                    cmd32.ExecuteNonQuery();
+                    con.Close();
+                }
+        }
+        //==================================
+        
+        // Pobranie danych z widoku dla języka obcego
+        IEnumerable<string> diffLanguageFore = _adminViewModel.ForeignLanguages.Except(_langForeignllAll);
+        /*
+        * Wstawianie danych języka obcego do tabeli statycznej i łączącej
+        */
+        var result5 = diffLanguageFore.ToList();
+        var LanguageForeResult = new List<string>();
+        foreach (var item in result5)
+        {
+            var LanguageForeInput = item.TrimEnd('%');
+            var LanguageForeLocal = LanguageForeInput.Split(" - ");
+            LanguageForeResult.AddRange(LanguageForeLocal);
+        }
+
+        int addNew5 = 0;
+        for (int i = 0; i < LanguageForeResult.Count-1; i = i + 2)
+        {
+            var stm33 = "Select nazwa from jezyki WHERE nazwa = @nazwaJezykaFore";
+            var cmd33 = new MySqlCommand(stm33, con);
+            cmd33.Parameters.AddWithValue("@nazwaJezykaFore", LanguageForeResult[i]);
+            con.Open();
+            var output33 = cmd33.ExecuteScalar();
+            con.Close();
+            addNew5 = 0;
+                if (output33 == null)
+                {
+                    addNew5 = 1;
+                }
+                if (addNew5.Equals(1) || !LanguageForeResult[i].Contains(output33.ToString()))
+                {
+                    var stm34 = "INSERT INTO jezyki(nazwa) VALUES(@nazwaJezykaFore)";
+                    var cmd34 = new MySqlCommand(stm34, con);
+                    cmd34.Parameters.AddWithValue("@nazwaJezykaFore", LanguageForeResult[i]);
+                    con.Open();
+                    cmd34.ExecuteNonQuery();
+                    con.Close();
+                    long nationality = cmd34.LastInsertedId;
+                    var stm35 = "INSERT INTO jezykobcy(id_panstwa, id_jezyka, procent) " +
+                                "VALUES(@idPanstwa, @idJezykaFore, @procent)";
+                    var cmd35 = new MySqlCommand(stm35, con);
+                    cmd35.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    cmd35.Parameters.AddWithValue("@idJezykaFore", nationality);
+                    cmd35.Parameters.AddWithValue("@procent", LanguageForeResult[i+1]);
+                    con.Open();
+                    cmd35.ExecuteNonQuery();
+                    con.Close();
+                }
+                else
+                {
+                    var stm36 = "Select jb.id_jezyka from jezykobcy jb " +
+                                "INNER JOIN jezyki j ON j.id = jb.id_jezyka " +
+                                "WHERE jb.id_panstwa=@idPanstwa AND j.nazwa = @nazwaJezykaFore";
+                    var cmd36 = new MySqlCommand(stm36, con);
+                    cmd36.Parameters.AddWithValue("@nazwaJezykaFore", LanguageForeResult[i]);
+                    cmd36.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    con.Open();
+                    var output36 = cmd36.ExecuteReader();
+                    _LanguageForeignTemp.Clear();
+                    while (output36.Read())
+                    {
+                        for (int j = 0; j < output36.FieldCount; j++)
+                        {
+                            _LanguageForeignTemp.Add(output36.GetValue(j).ToString());
+                        }
+                    }
+                    con.Close();
+                    var stm37 = "UPDATE jezykobcy SET procent = @procent " +
+                                "WHERE id_panstwa = @idPanstwa AND id_jezyka = @idJezykaFore";
+                    var cmd37 = new MySqlCommand(stm37, con);
+                    cmd37.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    cmd37.Parameters.AddWithValue("@idJezykaFore", _LanguageForeignTemp[0]);
+                    cmd37.Parameters.AddWithValue("@procent",  LanguageForeResult[i+1]);
+                    con.Open();
+                    cmd37.ExecuteNonQuery();
+                    con.Close();
+                }
+        }
+        //==================================
         
         
         
