@@ -102,7 +102,7 @@ public class AdminViewModel : ViewModelBase
         }
     }
     
-    public string? Population
+    public int? Population
     {
         get => _country.Population;
         set
@@ -112,7 +112,7 @@ public class AdminViewModel : ViewModelBase
         }
     }
     
-    public string? Territory
+    public int? Territory
     {
         get => _country.Territory;
         set
@@ -472,9 +472,9 @@ public class AdminViewModel : ViewModelBase
         con.Open();
         var output9 = cmd9.ExecuteScalar();
         con.Close();
-        Territory = "-";
+        Territory = 0;
         if (output9 != null) 
-            Territory = output9.ToString();
+            Territory = (int) output9;
 
         //---------------------------
         
@@ -506,9 +506,9 @@ public class AdminViewModel : ViewModelBase
         con.Open();
         var output11 = cmd11.ExecuteScalar();
         con.Close();
-        Population = "-";
+        Population = 0;
         if(output11 != null)
-            Population = output11.ToString();
+            Population = (int) output11;
         
         //---------------------------
         
@@ -522,5 +522,4 @@ public class AdminViewModel : ViewModelBase
         if(output12 !=  null)
             Anthem = output12.ToString();
     }
-    
 }

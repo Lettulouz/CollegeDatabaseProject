@@ -132,7 +132,8 @@
                     HorizontalAlignment="Center"
                     Background="Transparent"
                     Content="Obszar:"/>
-                <hc:TextBox
+                <hc:NumericUpDown
+                    Minimum="0"
                     Grid.Row="1" 
                     FontSize="{Binding FontSize}"
                     MinHeight="{Binding MinHeightLabelOrButton}"
@@ -140,8 +141,7 @@
                     hc:BorderElement.CornerRadius="4"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    
-                    Text="{Binding Territory, UpdateSourceTrigger=PropertyChanged}"/>
+                    Value="{Binding Territory, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -159,15 +159,16 @@
                     HorizontalAlignment="Center"
                     Background="Transparent"
                     Content="Ludność:"/>
-                <TextBox 
+                <hc:NumericUpDown
                     Grid.Row="1" 
+                    Minimum="0"
                     FontSize="{Binding FontSize}"
                     MinHeight="{Binding MinHeightLabelOrButton}"
                     MinWidth="{Binding MinWidthLabelOrButton}"
                     hc:BorderElement.CornerRadius="4"
                     HorizontalAlignment="Center"
                     Background="Transparent"
-                    Text="{Binding Population, UpdateSourceTrigger=PropertyChanged}"/>
+                    Value="{Binding Population, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <Grid Grid.Row="4" Grid.Column="1">
                 <Grid.RowDefinitions>

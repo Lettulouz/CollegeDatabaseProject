@@ -315,8 +315,8 @@ public class DatabaseModificationCommand :CommandBase
             var stmu14 = "UPDATE panstwo SET ludnosc=@ludnosc, obszar=@obszar, hymn=@hymn WHERE id=@idPanstwa";
             var cmdu14 = new MySqlCommand(stmu14, con);
             cmdu14.Parameters.AddWithValue("@idPanstwa", (int)outputu3);
-            cmdu14.Parameters.AddWithValue("@ludnosc", Int32.Parse(_adminViewModel.Population));
-            cmdu14.Parameters.AddWithValue("@obszar", Int32.Parse(_adminViewModel.Territory));
+            cmdu14.Parameters.AddWithValue("@ludnosc", _adminViewModel.Population);
+            cmdu14.Parameters.AddWithValue("@obszar", _adminViewModel.Territory);
             cmdu14.Parameters.AddWithValue("@hymn", _adminViewModel.Anthem);
             
             cmdu14.ExecuteNonQuery();

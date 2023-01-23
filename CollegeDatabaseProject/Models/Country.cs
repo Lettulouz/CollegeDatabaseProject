@@ -18,8 +18,8 @@ public class Country
     public string? HeadOfCountry2 { get; set; }
     public string? HeadOfCountry3 { get; set; }
     
-    public string? Population { get; set; }
-    public string? Territory { get; set; }
+    public int? Population { get; set; }
+    public int? Territory { get; set; }
     public string? Anthem { get; set; }
 
     public Country()
@@ -28,8 +28,8 @@ public class Country
         HeadOfCountry1 = "";
         HeadOfCountry2 = "";
         HeadOfCountry3 = "";
-        Population = "";
-        Territory = "";
+        Population = 0;
+        Territory = 0;
         Anthem = "";
         Currencies = new();
         Continents = new();
@@ -38,24 +38,6 @@ public class Country
         OfficialLanguages = new();
         ForeignLanguages = new();
         PopulationByFaith = new();
-        /*
-        AddCurrency("PLN");
-        AddCurrency("EUR");
-        AddContinent("Europa");
-        AddPopulationByNationality("Polacy: 35000000");
-        AddPopulationByNationality("Ukraińcy: 2000000");
-        AddCapitalsOfCountry("Warszawa");
-        AddOfficialLanguage("polski");
-        AddForeignLanguage("angielski - 58%");
-        AddForeignLanguage("niemiecki - 25%");
-        AddForeignLanguage("francuski - 13%");
-        AddForeignLanguage("hiszpański - 4%");
-        AddPopulationByFaith("chrześcijaństwo - 50%");
-        AddPopulationByFaith("muzułmanizm - 10%");
-        AddPopulationByFaith("buddyzm - 5%");
-        AddPopulationByFaith("niewierzący - 35%");
-        */
-        
     }
 
     public void AddCurrency(string currency)
