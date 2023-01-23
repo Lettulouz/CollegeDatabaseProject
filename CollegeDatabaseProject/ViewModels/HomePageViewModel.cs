@@ -176,18 +176,16 @@ public class HomePageViewModel : ViewModelBase
     public void FillFieldsWithDb(string? countryName)
     {
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
-        MySqlTransaction tr = null;
-
-       
-        var stm = "Select id from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
-        var cmd = new MySqlCommand(stm, con);
-        cmd.Parameters.AddWithValue("@nazwaPanstwa", countryName);
+        
+        
         con.Open();
-        tr = con.BeginTransaction();
-        cmd.Transaction = tr;
+        MySqlTransaction tr = con.BeginTransaction();
+        var stm = "Select id from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
+        var cmd = new MySqlCommand(stm, con, tr);
+        cmd.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         var output = cmd.ExecuteScalar();
-        tr.Commit();
-        con.Close();
+        
+
         
         //---------------------------
         
@@ -195,9 +193,8 @@ public class HomePageViewModel : ViewModelBase
                   "INNER JOIN waluty AS w ON wp.id_waluty=w.id " +
                   "INNER JOIN panstwo AS p ON p.id=wp.id_panstwa " +
                   "WHERE p.id=@idPanstwa";
-        var cmd2 = new MySqlCommand(stm2, con);
+        var cmd2 = new MySqlCommand(stm2, con, tr);
         cmd2.Parameters.AddWithValue("@idPanstwa", output);
-        con.Open();
         var output2 = cmd2.ExecuteReader();
         CurrenciesInCountry.Clear();
         while (output2.Read())
@@ -207,7 +204,7 @@ public class HomePageViewModel : ViewModelBase
                 CurrenciesInCountry.Add(output2.GetValue(i).ToString());
             }
         }
-        con.Close();
+        output2.Close();
         
         //---------------------------
         
@@ -215,9 +212,8 @@ public class HomePageViewModel : ViewModelBase
                    "INNER JOIN kontynenty AS k ON pk.id_kontynentu=k.id " +
                    "INNER JOIN panstwo AS p ON p.id=pk.id_panstwa " +
                    "WHERE p.id=@idPanstwa";
-        var cmd3 = new MySqlCommand(stm3, con);
+        var cmd3 = new MySqlCommand(stm3, con, tr);
         cmd3.Parameters.AddWithValue("@idPanstwa", output);
-        con.Open();
         var output3 = cmd3.ExecuteReader();
         CountryOnContinents.Clear();
         while (output3.Read())
@@ -225,7 +221,7 @@ public class HomePageViewModel : ViewModelBase
             for(int i=0; i<output3.FieldCount; i++)
                 CountryOnContinents.Add(output3.GetValue(i).ToString());
         }
-        con.Close();
+        output3.Close();
         
         //---------------------------
         
@@ -233,9 +229,8 @@ public class HomePageViewModel : ViewModelBase
                    "INNER JOIN narodowosc AS n ON ln.id_narodowosci=n.id " +
                    "INNER JOIN panstwo AS p ON p.id=ln.id_panstwa " +
                    "WHERE p.id=@idPanstwa ORDER BY ln.liczebnosc DESC";
-        var cmd4 = new MySqlCommand(stm4, con);
+        var cmd4 = new MySqlCommand(stm4, con, tr);
         cmd4.Parameters.AddWithValue("@idPanstwa", output);
-        con.Open();
         var output4 = cmd4.ExecuteReader();
         PopulationByNationality.Clear();
         while (output4.Read())
@@ -243,7 +238,7 @@ public class HomePageViewModel : ViewModelBase
             for(int i=0; i<output4.FieldCount; i++)
                 PopulationByNationality.Add(output4.GetValue(i).ToString());
         }
-        con.Close();
+        output4.Close();
         
         //---------------------------
         
@@ -251,9 +246,8 @@ public class HomePageViewModel : ViewModelBase
                    "INNER JOIN stolice AS s ON sp.id_stolicy=s.id " +
                    "INNER JOIN panstwo AS p ON p.id=sp.id_panstwa " +
                    "WHERE p.id=@idPanstwa";
-        var cmd5 = new MySqlCommand(stm5, con);
+        var cmd5 = new MySqlCommand(stm5, con, tr);
         cmd5.Parameters.AddWithValue("@idPanstwa", output);
-        con.Open();
         var output5 = cmd5.ExecuteReader();
         CapitalsOfCountry.Clear();
         while (output5.Read())
@@ -261,7 +255,7 @@ public class HomePageViewModel : ViewModelBase
             for(int i=0; i<output5.FieldCount; i++)
                 CapitalsOfCountry.Add(output5.GetValue(i).ToString());
         }
-        con.Close();
+        output5.Close();
         
         //---------------------------
         
@@ -269,9 +263,8 @@ public class HomePageViewModel : ViewModelBase
                    "INNER JOIN jezyki AS j ON jo.id_jezyka=j.id " +
                    "INNER JOIN panstwo AS p ON p.id=jo.id_panstwa " +
                    "WHERE p.id=@idPanstwa";
-        var cmd6 = new MySqlCommand(stm6, con);
+        var cmd6 = new MySqlCommand(stm6, con, tr);
         cmd6.Parameters.AddWithValue("@idPanstwa", output);
-        con.Open();
         var output6 = cmd6.ExecuteReader();
         OfficialLanguages.Clear();
         while (output6.Read())
@@ -279,7 +272,7 @@ public class HomePageViewModel : ViewModelBase
             for(int i=0; i<output6.FieldCount; i++)
                 OfficialLanguages.Add(output6.GetValue(i).ToString());
         }
-        con.Close();
+        output6.Close();
         
         //---------------------------
         
@@ -287,9 +280,8 @@ public class HomePageViewModel : ViewModelBase
                    "INNER JOIN jezyki AS j ON jo.id_jezyka=j.id " +
                    "INNER JOIN panstwo AS p ON p.id=jo.id_panstwa " +
                    "WHERE p.id=@idPanstwa ORDER BY jo.procent DESC";
-        var cmd7 = new MySqlCommand(stm7, con);
+        var cmd7 = new MySqlCommand(stm7, con, tr);
         cmd7.Parameters.AddWithValue("@idPanstwa", output);
-        con.Open();
         var output7 = cmd7.ExecuteReader();
         ForeignLanguages.Clear();
         while (output7.Read())
@@ -297,7 +289,7 @@ public class HomePageViewModel : ViewModelBase
             for(int i=0; i<output7.FieldCount; i++)
                 ForeignLanguages.Add(output7.GetValue(i).ToString());
         }
-        con.Close();
+        output7.Close();
         
         //---------------------------
         
@@ -305,9 +297,8 @@ public class HomePageViewModel : ViewModelBase
                    "INNER JOIN wiary AS w ON lw.id_wiary=w.id " +
                    "INNER JOIN panstwo AS p ON p.id=lw.id_panstwa " +
                    "WHERE p.id=@idPanstwa ORDER BY lw.liczebnosc DESC";
-        var cmd8 = new MySqlCommand(stm8, con);
+        var cmd8 = new MySqlCommand(stm8, con, tr);
         cmd8.Parameters.AddWithValue("@idPanstwa", output);
-        con.Open();
         var output8 = cmd8.ExecuteReader();
         PopulationByFaith.Clear();
         while (output8.Read())
@@ -315,16 +306,14 @@ public class HomePageViewModel : ViewModelBase
             for(int i=0; i<output8.FieldCount; i++)
                 PopulationByFaith.Add(output8.GetValue(i).ToString());
         }
-        con.Close();
+        output8.Close();
         
         //---------------------------
         
         var stm9 = "Select CONCAT(obszar, ' km²') from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
-        var cmd9 = new MySqlCommand(stm9, con);
+        var cmd9 = new MySqlCommand(stm9, con, tr);
         cmd9.Parameters.AddWithValue("@nazwaPanstwa", countryName);
-        con.Open();
         var output9 = cmd9.ExecuteScalar();
-        con.Close();
         Territory = "";
         if (output9 != null) Territory = output9.ToString();
 
@@ -334,11 +323,9 @@ public class HomePageViewModel : ViewModelBase
                     "INNER JOIN tytulyglowpanstw as tgp ON gp.id_tytulu=tgp.id " +
                     "INNER JOIN panstwo as p ON gp.id_panstwa=p.id " +
                     "WHERE nazwaPanstwa=@nazwaPanstwa";
-        var cmd10 = new MySqlCommand(stm10, con);
+        var cmd10 = new MySqlCommand(stm10, con, tr);
         cmd10.Parameters.AddWithValue("@nazwaPanstwa", countryName);
-        con.Open();
         var output10 = cmd10.ExecuteScalar();
-        con.Close();
         HeadOfCountry = "Nie podano";
         if(output10 != null)
             HeadOfCountry = output10.ToString();
@@ -346,11 +333,9 @@ public class HomePageViewModel : ViewModelBase
         //---------------------------
         
         var stm11 = "Select ludnosc from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
-        var cmd11 = new MySqlCommand(stm11, con);
+        var cmd11 = new MySqlCommand(stm11, con, tr);
         cmd11.Parameters.AddWithValue("@nazwaPanstwa", countryName);
-        con.Open();
         var output11 = cmd11.ExecuteScalar();
-        con.Close();
         Population = "Nie podano";
         if(output11 != null)
             Population = output11.ToString();
@@ -358,10 +343,10 @@ public class HomePageViewModel : ViewModelBase
         //---------------------------
         
         var stm12 = "Select hymn from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
-        var cmd12 = new MySqlCommand(stm12, con);
+        var cmd12 = new MySqlCommand(stm12, con, tr);
         cmd12.Parameters.AddWithValue("@nazwaPanstwa", countryName);
-        con.Open();
         var output12 = cmd12.ExecuteScalar();
+        tr.Commit();
         con.Close();
         Anthem = "Nie podano";
         if(output12 !=  null)
