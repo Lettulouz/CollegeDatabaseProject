@@ -32,7 +32,11 @@ public class SideBarAdminViewModel : ViewModelBase
                 _searchOutputField = _selectedCountry.ToString();
                 OnPropertyChanged(nameof(SearchOutputField));
                 if (_homePageViewModel != null) _homePageViewModel.ChosenCountry = _selectedCountry.ToString();
-                if (_adminViewModel != null) _adminViewModel.ChosenCountry = _selectedCountry.ToString();
+                if (_adminViewModel != null) 
+                {
+                    _adminViewModel.ChosenCountry = _selectedCountry.ToString();
+                    _adminViewModel.SavedCountryName = _searchOutputField;
+                }
             }
         }
     }

@@ -31,6 +31,7 @@ public class AdminViewModel : ViewModelBase
     
     private string? _chosenCountry = "";
     private int? _idChosenCountry;
+    private string? _savedCountryName;
     private string _textInput1;
     private string _textInput2;
     private string _textInput31;
@@ -52,6 +53,17 @@ public class AdminViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    public string? SavedCountryName 
+    { 
+        get => _savedCountryName;
+        set { 
+            _savedCountryName = value; 
+            OnPropertyChanged();
+            
+        }
+    }
+
     public int? IdChosenCountry
     {
         get => _idChosenCountry;
@@ -460,7 +472,7 @@ public class AdminViewModel : ViewModelBase
         con.Open();
         var output9 = cmd9.ExecuteScalar();
         con.Close();
-        Territory = "";
+        Territory = "-";
         if (output9 != null) 
             Territory = output9.ToString();
 
@@ -473,6 +485,9 @@ public class AdminViewModel : ViewModelBase
         var cmd10 = new MySqlCommand(stm10, con);
         cmd10.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         con.Open();
+        HeadOfCountry1 = "-";
+        HeadOfCountry2 = "-";
+        HeadOfCountry3 = "-";
         var output10 = cmd10.ExecuteReader();
         while(output10.Read())
         {
@@ -491,7 +506,7 @@ public class AdminViewModel : ViewModelBase
         con.Open();
         var output11 = cmd11.ExecuteScalar();
         con.Close();
-        Population = "Nie podano";
+        Population = "-";
         if(output11 != null)
             Population = output11.ToString();
         
@@ -503,7 +518,7 @@ public class AdminViewModel : ViewModelBase
         con.Open();
         var output12 = cmd12.ExecuteScalar();
         con.Close();
-        Anthem = "Nie podano";
+        Anthem = "-";
         if(output12 !=  null)
             Anthem = output12.ToString();
     }
