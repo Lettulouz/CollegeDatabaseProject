@@ -22,6 +22,7 @@ public class DatabaseModificationCommand :CommandBase
     private ObservableCollection<string?> _religionAll = new ();
     private ObservableCollection<string?> _nationalityTemp = new ();
     private ObservableCollection<string?> _LanguageForeignTemp = new ();
+    private ObservableCollection<string?> _ReligionTemp = new ();
     public DatabaseModificationCommand(AdminViewModel adminViewModel)
     {
         _adminViewModel = adminViewModel;
@@ -183,7 +184,7 @@ public class DatabaseModificationCommand :CommandBase
         /*
         * Pobieranie danych z tabeli wiara ludnosci
         */
-        var stm7 = "Select w.nazwa from ludnoscwgwierzen AS lw " +
+        var stm7 = "Select CONCAT(w.nazwa, ' - ', lw.liczebnosc, '%') from ludnoscwgwierzen AS lw " +
                    "INNER JOIN wiary AS w ON lw.id_wiary=w.id " +
                    "INNER JOIN panstwo AS p ON p.id=lw.id_panstwa " +
                    "WHERE p.id=@idPanstwa ORDER BY lw.liczebnosc DESC";
@@ -365,32 +366,53 @@ public class DatabaseModificationCommand :CommandBase
                 }
                 else
                 {
-                    var stm21 = "Select ln.id_narodowosci from ludnoscwgnarodowosci ln " +
+                    var stm50 = "Select ln.id_narodowosci from ludnoscwgnarodowosci ln " +
                                 "INNER JOIN narodowosc n ON n.id = ln.id_narodowosci " +
                                 "WHERE ln.id_panstwa=@idPanstwa AND n.nazwa = @nazwaNarodowosci";
-                    var cmd21 = new MySqlCommand(stm21, con);
-                    cmd21.Parameters.AddWithValue("@nazwaNarodowosci", NationalityResult[i]);
-                    cmd21.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    var cmd50 = new MySqlCommand(stm50, con);
+                    cmd50.Parameters.AddWithValue("@nazwaNarodowosci", NationalityResult[i]);
+                    cmd50.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
                     con.Open();
-                    var output21 = cmd21.ExecuteReader();
-                    _nationalityTemp.Clear();
-                    while (output21.Read())
+                    var output50 = cmd50.ExecuteScalar();
+                    con.Close();
+                    if (output50 == null)
                     {
-                        for (int j = 0; j < output21.FieldCount; j++)
+                        var stm51 = "Select id from narodowosc WHERE nazwa = @nazwaNarodowosci";
+                        var cmd51 = new MySqlCommand(stm51, con);
+                        cmd51.Parameters.AddWithValue("@nazwaNarodowosci", NationalityResult[i]);
+                        con.Open();
+                        var output51 = cmd51.ExecuteReader();
+                        _nationalityTemp.Clear();
+                        while (output51.Read())
                         {
-                            _nationalityTemp.Add(output21.GetValue(j).ToString());
+                            for (int j = 0; j < output51.FieldCount; j++)
+                            {
+                                _nationalityTemp.Add(output51.GetValue(j).ToString());
+                            }
                         }
+                        con.Close();
+                        var stm52 = "INSERT INTO ludnoscwgnarodowosci(id_panstwa, id_narodowosci, liczebnosc) " +
+                                    "VALUES(@idPanstwa, @idNarodowosci, @liczebnosc)";
+                        var cmd52 = new MySqlCommand(stm52, con);
+                        cmd52.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                        cmd52.Parameters.AddWithValue("@idNarodowosci", _nationalityTemp[0]);
+                        cmd52.Parameters.AddWithValue("@liczebnosc", NationalityResult[i+1]);
+                        con.Open();
+                        cmd52.ExecuteNonQuery();
+                        con.Close();
                     }
-                    con.Close();
-                    var stm22 = "UPDATE ludnoscwgnarodowosci SET liczebnosc = @liczebnosc " +
-                                "WHERE id_panstwa = @idPanstwa AND id_narodowosci = @idNarodowosci";
-                    var cmd22 = new MySqlCommand(stm22, con);
-                    cmd22.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
-                    cmd22.Parameters.AddWithValue("@idNarodowosci", _nationalityTemp[0]);
-                    cmd22.Parameters.AddWithValue("@liczebnosc",  NationalityResult[i+1]);
-                    con.Open();
-                    cmd22.ExecuteNonQuery();
-                    con.Close();
+                    else
+                    {
+                        var stm53 = "UPDATE ludnoscwgnarodowosci SET liczebnosc = @liczebnosc " +
+                                    "WHERE id_panstwa = @idPanstwa AND id_narodowosci = @idNarodowosci";
+                        var cmd53 = new MySqlCommand(stm53, con);
+                        cmd53.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                        cmd53.Parameters.AddWithValue("@idNarodowosci", (int)output50);
+                        cmd53.Parameters.AddWithValue("@liczebnosc",  NationalityResult[i+1]);
+                        con.Open();
+                        cmd53.ExecuteNonQuery();
+                        con.Close();
+                    }
                 }
         }
         //==================================
@@ -565,35 +587,151 @@ public class DatabaseModificationCommand :CommandBase
                     cmd36.Parameters.AddWithValue("@nazwaJezykaFore", LanguageForeResult[i]);
                     cmd36.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
                     con.Open();
-                    var output36 = cmd36.ExecuteReader();
-                    _LanguageForeignTemp.Clear();
-                    while (output36.Read())
+                    var output36 = cmd36.ExecuteScalar();
+                    con.Close();
+                    if (output36 == null)
                     {
-                        for (int j = 0; j < output36.FieldCount; j++)
+                        var stm38 = "Select id from jezyki WHERE nazwa = @nazwaJezykaFore";
+                        var cmd38 = new MySqlCommand(stm38, con);
+                        cmd38.Parameters.AddWithValue("@nazwaJezykaFore", LanguageForeResult[i]);
+                        con.Open();
+                        var output38 = cmd38.ExecuteReader();
+                        _LanguageForeignTemp.Clear();
+                        while (output38.Read())
                         {
-                            _LanguageForeignTemp.Add(output36.GetValue(j).ToString());
+                            for (int j = 0; j < output38.FieldCount; j++)
+                            {
+                                _LanguageForeignTemp.Add(output38.GetValue(j).ToString());
+                            }
                         }
+                        con.Close();
+                        var stm39 = "INSERT INTO jezykobcy(id_panstwa, id_jezyka, procent) " +
+                                    "VALUES(@idPanstwa, @idJezykaFore, @procent)";
+                        var cmd39 = new MySqlCommand(stm39, con);
+                        cmd39.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                        cmd39.Parameters.AddWithValue("@idJezykaFore", _LanguageForeignTemp[0]);
+                        cmd39.Parameters.AddWithValue("@procent", LanguageForeResult[i+1]);
+                        con.Open();
+                        cmd39.ExecuteNonQuery();
+                        con.Close();
                     }
-                    con.Close();
-                    var stm37 = "UPDATE jezykobcy SET procent = @procent " +
-                                "WHERE id_panstwa = @idPanstwa AND id_jezyka = @idJezykaFore";
-                    var cmd37 = new MySqlCommand(stm37, con);
-                    cmd37.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
-                    cmd37.Parameters.AddWithValue("@idJezykaFore", _LanguageForeignTemp[0]);
-                    cmd37.Parameters.AddWithValue("@procent",  LanguageForeResult[i+1]);
-                    con.Open();
-                    cmd37.ExecuteNonQuery();
-                    con.Close();
+                    else
+                    {
+                        var stm37 = "UPDATE jezykobcy SET procent = @procent " +
+                                    "WHERE id_panstwa = @idPanstwa AND id_jezyka = @idJezykaFore";
+                        var cmd37 = new MySqlCommand(stm37, con);
+                        cmd37.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                        cmd37.Parameters.AddWithValue("@idJezykaFore", (int)output36);
+                        cmd37.Parameters.AddWithValue("@procent",  LanguageForeResult[i+1]);
+                        con.Open();
+                        cmd37.ExecuteNonQuery();
+                        con.Close();
+                    }
                 }
         }
         //==================================
         
-        
-        
+        // Pobranie danych z widoku dla ludnosci wg wiary
+        IEnumerable<string> diffReligion = _adminViewModel.PopulationByFaith.Except(_religionAll);
+        /*
+        * Wstawianie danych ludnosci wg wiary do tabeli statycznej i łączącej
+        */
+        var result6 = diffReligion.ToList();
+        var ReligionResult = new List<string>();
+        foreach (var item in result6)
+        {
+            var ReligionInput = item.TrimEnd('%');
+            var ReligionLocal = ReligionInput.Split(" - ");
+            ReligionResult.AddRange(ReligionLocal);
+        }
 
-
-            _adminViewModel.FillFieldsWithDb(_adminViewModel.ChosenCountry);
-            CleanInputs();
+        int addNew6 = 0;
+        for (int i = 0; i < ReligionResult.Count-1; i = i + 2)
+        {
+            var stm40 = "Select nazwa from wiary WHERE nazwa = @nazwaWiary";
+            var cmd40 = new MySqlCommand(stm40, con);
+            cmd40.Parameters.AddWithValue("@nazwaWiary", ReligionResult[i]);
+            con.Open();
+            var output40 = cmd40.ExecuteScalar();
+            con.Close();
+            addNew6 = 0;
+                if (output40 == null)
+                {
+                    addNew6 = 1;
+                }
+                if (addNew6.Equals(1) || !ReligionResult[i].Contains(output40.ToString()))
+                {
+                    var stm41 = "INSERT INTO wiary(nazwa) VALUES(@nazwaWiary)";
+                    var cmd41 = new MySqlCommand(stm41, con);
+                    cmd41.Parameters.AddWithValue("@nazwaWiary", ReligionResult[i]);
+                    con.Open();
+                    cmd41.ExecuteNonQuery();
+                    con.Close();
+                    long religion = cmd41.LastInsertedId;
+                    var stm42 = "INSERT INTO ludnoscwgwierzen(id_panstwa, id_wiary, liczebnosc) " +
+                                "VALUES(@idPanstwa, @idWiary, @liczebnosc)";
+                    var cmd42 = new MySqlCommand(stm42, con);
+                    cmd42.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    cmd42.Parameters.AddWithValue("@idWiary", religion);
+                    cmd42.Parameters.AddWithValue("@liczebnosc", ReligionResult[i+1]);
+                    con.Open();
+                    cmd42.ExecuteNonQuery();
+                    con.Close();
+                }
+                else
+                {
+                    var stm43 = "Select lw.id_wiary from ludnoscwgwierzen lw " +
+                                "INNER JOIN wiary w ON w.id = lw.id_wiary " +
+                                "WHERE lw.id_panstwa=@idPanstwa AND w.nazwa = @nazwaWiary";
+                    var cmd43 = new MySqlCommand(stm43, con);
+                    cmd43.Parameters.AddWithValue("@nazwaWiary", ReligionResult[i]);
+                    cmd43.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                    con.Open();
+                    var output43 = cmd43.ExecuteScalar();
+                    con.Close();
+                    if (output43 == null)
+                    {
+                        var stm44 = "Select id from wiary WHERE nazwa = @nazwaWiary";
+                        var cmd44 = new MySqlCommand(stm44, con);
+                        cmd44.Parameters.AddWithValue("@nazwaWiary", ReligionResult[i]);
+                        con.Open();
+                        var output44 = cmd44.ExecuteReader();
+                        _ReligionTemp.Clear();
+                        while (output44.Read())
+                        {
+                            for (int j = 0; j < output44.FieldCount; j++)
+                            {
+                                _ReligionTemp.Add(output44.GetValue(j).ToString());
+                            }
+                        }
+                        con.Close();
+                        var stm45 = "INSERT INTO ludnoscwgwierzen(id_panstwa, id_wiary, liczebnosc) " +
+                                    "VALUES(@idPanstwa, @idWiary, @liczebnosc)";
+                        var cmd45 = new MySqlCommand(stm45, con);
+                        cmd45.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                        cmd45.Parameters.AddWithValue("@idWiary", _ReligionTemp[0]);
+                        cmd45.Parameters.AddWithValue("@liczebnosc", ReligionResult[i+1]);
+                        con.Open();
+                        cmd45.ExecuteNonQuery();
+                        con.Close();
+                    }
+                    else
+                    {
+                        var stm46 = "UPDATE ludnoscwgwierzen SET liczebnosc = @liczebnosc " +
+                                    "WHERE id_panstwa = @idPanstwa AND id_wiary = @idWiary";
+                        var cmd46 = new MySqlCommand(stm46, con);
+                        cmd46.Parameters.AddWithValue("@idPanstwa", _adminViewModel.IdChosenCountry);
+                        cmd46.Parameters.AddWithValue("@idWiary", (int)output43);
+                        cmd46.Parameters.AddWithValue("@liczebnosc",  ReligionResult[i+1]);
+                        con.Open();
+                        cmd46.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+        }
+        //==================================
+        _adminViewModel.FillFieldsWithDb(_adminViewModel.ChosenCountry);
+        CleanInputs();
     }
 
     private void CleanInputs()
