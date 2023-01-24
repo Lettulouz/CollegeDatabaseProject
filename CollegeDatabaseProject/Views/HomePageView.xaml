@@ -112,6 +112,7 @@
                     BorderThickness="0"
                     HorizontalAlignment="Center"
                     Content="{Binding Territory, UpdateSourceTrigger=PropertyChanged}"
+                    ContentStringFormat="{}{0} km²"
                     Background="Transparent"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="1">

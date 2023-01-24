@@ -33,16 +33,10 @@ namespace CollegeDatabaseProject
         private static HomePageViewModel _homePageViewModel;
         public App()
         {
-           // MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
-          //  con.Open();
-           // var stm = "Select nazwaPanstwa from panstwo";
-           // var cmd = new MySqlCommand(stm, con);
-           // var output = cmd.ExecuteReader();
-            
             _navigationStore = new NavigationStore();
         }
 
-        /*
+        
         protected override void OnStartup(StartupEventArgs e)
         {
             _connectionString = DbConnection.getDbString();
@@ -63,32 +57,5 @@ namespace CollegeDatabaseProject
             _homePageViewModel = new HomePageViewModel();
             return _homePageViewModel;
         }
-        */
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            _connectionString = DbConnection.getDbString();
-            
-            TopBarViewModel topBarViewModel = new(1);
-            topBarViewModel.AppName = "Administrator";
-            AdminViewModel adminViewModel = CreateAdminViewModel();
-            _navigationStore.CurrentViewModel = adminViewModel;
-            _navigationStore.TopBarViewModel = topBarViewModel;
-            _navigationStore.SideBarViewModel = new SideBarAdminViewModel(adminViewModel);
-            Window test = new AdminWindow()
-            {
-                DataContext = new MainViewModel(_navigationStore),
-            };
-            test.Show();
-            base.OnStartup(e);
-        }
-        
-        
-        private AdminViewModel CreateAdminViewModel()
-        {
-            AdminViewModel adminViewModel = new();
-            return adminViewModel;
-        }
-        
     }
-    
 }

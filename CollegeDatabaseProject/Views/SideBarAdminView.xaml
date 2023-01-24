@@ -13,6 +13,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
         
@@ -48,5 +49,8 @@
                 <DataGridTextColumn Width="*" Binding="{Binding}" Header="Kraje" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Grid.Row="5" Content="Usuń" 
+                Command="{Binding DeleteCountryCommand}"
+                Style="{StaticResource ButtonDanger}"/>
     </Grid>
 </UserControl>

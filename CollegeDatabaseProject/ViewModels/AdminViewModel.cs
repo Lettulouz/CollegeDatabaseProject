@@ -49,7 +49,6 @@ public class AdminViewModel : ViewModelBase
         set
         {
             _chosenCountry = value;
-            FillFieldsWithDb(_chosenCountry);
             OnPropertyChanged();
         }
     }
@@ -102,7 +101,7 @@ public class AdminViewModel : ViewModelBase
         }
     }
     
-    public double? Population
+    public int? Population
     {
         get => _country.Population;
         set
@@ -112,7 +111,7 @@ public class AdminViewModel : ViewModelBase
         }
     }
     
-    public double? Territory
+    public int? Territory
     {
         get => _country.Territory;
         set
@@ -322,17 +321,13 @@ public class AdminViewModel : ViewModelBase
     public void FillFieldsWithDb(string? countryName)
     {
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
-        MySqlTransaction tr = null;
 
        
         var stm = "Select id from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
         var cmd = new MySqlCommand(stm, con);
         cmd.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         con.Open();
-        tr = con.BeginTransaction();
-        cmd.Transaction = tr;
         var output = cmd.ExecuteScalar();
-        tr.Commit();
         con.Close();
         _idChosenCountry = (int?)output;
         OnPropertyChanged(nameof(IdChosenCountry));
@@ -474,7 +469,7 @@ public class AdminViewModel : ViewModelBase
         con.Close();
         Territory = 0;
         if (output9 != null) 
-            Territory = (double)output9;
+            Territory = (int)output9;
 
         //---------------------------
         
@@ -485,9 +480,9 @@ public class AdminViewModel : ViewModelBase
         var cmd10 = new MySqlCommand(stm10, con);
         cmd10.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         con.Open();
-        HeadOfCountry1 = "-";
-        HeadOfCountry2 = "-";
-        HeadOfCountry3 = "-";
+        HeadOfCountry1 = "";
+        HeadOfCountry2 = "";
+        HeadOfCountry3 = "";
         var output10 = cmd10.ExecuteReader();
         while(output10.Read())
         {
@@ -508,7 +503,7 @@ public class AdminViewModel : ViewModelBase
         con.Close();
         Population = 0;
         if(output11 != null)
-            Population = (double) output11;
+            Population = (int) output11;
         
         //---------------------------
         
@@ -518,7 +513,7 @@ public class AdminViewModel : ViewModelBase
         con.Open();
         var output12 = cmd12.ExecuteScalar();
         con.Close();
-        Anthem = "-";
+        Anthem = "";
         if(output12 !=  null)
             Anthem = output12.ToString();
     }

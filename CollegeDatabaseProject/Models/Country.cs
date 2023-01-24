@@ -18,8 +18,8 @@ public class Country
     public string? HeadOfCountry2 { get; set; }
     public string? HeadOfCountry3 { get; set; }
     
-    public double? Population { get; set; }
-    public double? Territory { get; set; }
+    public int? Population { get; set; }
+    public int? Territory { get; set; }
     public string? Anthem { get; set; }
 
     public Country()

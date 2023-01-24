@@ -12,9 +12,12 @@
         <Grid.Background>  
             <VisualBrush>
                 <VisualBrush.Visual>
-                    <Image gif:ImageBehavior.AnimatedSource="/CollegeDatabaseProject;component/Resources/dies-cat.gif"
+                    <Image gif:ImageBehavior.AnimatedSource="/CollegeDatabaseProject;component/Resources/earth-revolve.gif"
                            gif:ImageBehavior.AutoStart="True"
-                           gif:ImageBehavior.RepeatBehavior="1"/>
+                           gif:ImageBehavior.RepeatBehavior="1"
+                           gif:ImageBehavior.AnimationSpeedRatio="0.9">
+                        <Image.Opacity>0.3</Image.Opacity>
+                    </Image>
                 </VisualBrush.Visual>
             </VisualBrush>
         </Grid.Background>

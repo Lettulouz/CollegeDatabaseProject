@@ -52,7 +52,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public double? Population
+    public int? Population
     {
         get => _country.Population;
         set
@@ -62,7 +62,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public double? Territory
+    public int? Territory
     {
         get => _country.Territory;
         set
@@ -310,12 +310,12 @@ public class HomePageViewModel : ViewModelBase
         
         //---------------------------
         
-        var stm9 = "Select CONCAT(obszar, ' km²') from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
+        var stm9 = "Select obszar from panstwo WHERE nazwaPanstwa=@nazwaPanstwa";
         var cmd9 = new MySqlCommand(stm9, con, tr);
         cmd9.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         var output9 = cmd9.ExecuteScalar();
         Territory = 0;
-        if (output9 != null) Territory = (int)output9;
+        if (output9 != null) Territory = (int) output9;
 
         //---------------------------
         

@@ -43,7 +43,6 @@
                   CurrentItem="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Binding="{Binding}" Header="Kraje" CellStyle="{StaticResource DataGridTextCenterColumnStyle}"/>
-                <DataGridCheckBoxColumn Header="Usuń"></DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

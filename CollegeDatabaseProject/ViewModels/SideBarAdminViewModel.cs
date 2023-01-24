@@ -35,6 +35,7 @@ public class SideBarAdminViewModel : ViewModelBase
                 if (_adminViewModel != null) 
                 {
                     _adminViewModel.ChosenCountry = _selectedCountry.ToString();
+                    _adminViewModel.FillFieldsWithDb(_searchOutputField);
                     _adminViewModel.SavedCountryName = _searchOutputField;
                 }
             }
@@ -74,6 +75,7 @@ public class SideBarAdminViewModel : ViewModelBase
     public ICommand SearchButtonCommand { get; }
     public ICommand OpenAdminCommand { get; }
     public ICommand AddNewCountryCommand { get; }
+    public ICommand DeleteCountryCommand { get; }
     
     public SideBarAdminViewModel(AdminViewModel adminViewModel)
     {
@@ -81,6 +83,12 @@ public class SideBarAdminViewModel : ViewModelBase
         ReloadButtonCommand = new ReloadButtonCommand(this);
         SearchButtonCommand = new SearchButtonCommand(this);
         AddNewCountryCommand = new AddNewCountry(this);
+        DeleteCountryCommand = new DeleteCountryCommand(this);
+        ReadFromDatabase();
+    }
+
+    public void ReadFromDatabase()
+    {
         MySqlConnection con = new MySqlConnection(DbConnection.getDbString());
 
         var stm = "Select nazwaPanstwa from panstwo";
@@ -93,8 +101,8 @@ public class SideBarAdminViewModel : ViewModelBase
             for(int i=0; i<output.FieldCount; i++)
                 _dataList.Add(output.GetValue(i).ToString());
         }
+        con.Close();
     }
-
     public void OnPropChange()
     {
         OnPropertyChanged();
