@@ -52,7 +52,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public string? Population
+    public double? Population
     {
         get => _country.Population;
         set
@@ -62,7 +62,7 @@ public class HomePageViewModel : ViewModelBase
         }
     }
     
-    public string? Territory
+    public double? Territory
     {
         get => _country.Territory;
         set
@@ -314,8 +314,8 @@ public class HomePageViewModel : ViewModelBase
         var cmd9 = new MySqlCommand(stm9, con, tr);
         cmd9.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         var output9 = cmd9.ExecuteScalar();
-        Territory = "";
-        if (output9 != null) Territory = output9.ToString();
+        Territory = 0;
+        if (output9 != null) Territory = (int)output9;
 
         //---------------------------
         
@@ -336,9 +336,9 @@ public class HomePageViewModel : ViewModelBase
         var cmd11 = new MySqlCommand(stm11, con, tr);
         cmd11.Parameters.AddWithValue("@nazwaPanstwa", countryName);
         var output11 = cmd11.ExecuteScalar();
-        Population = "Nie podano";
+        Population = 0;
         if(output11 != null)
-            Population = output11.ToString();
+            Population = (int)output11;
         
         //---------------------------
         

@@ -12,7 +12,7 @@ public class AddNewCountry : CommandBase
     
     public override void Execute(object? parameter)
     {
-        if(!_sideBarAdminViewModel.DataList.Contains("Nowe"))
+        if(!_sideBarAdminViewModel.DataList.Equals("Nowe"))
             _sideBarAdminViewModel.DataList.Add("Nowe");
     }
 }

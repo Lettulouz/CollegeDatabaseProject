@@ -102,7 +102,7 @@ public class AdminViewModel : ViewModelBase
         }
     }
     
-    public int? Population
+    public double? Population
     {
         get => _country.Population;
         set
@@ -112,7 +112,7 @@ public class AdminViewModel : ViewModelBase
         }
     }
     
-    public int? Territory
+    public double? Territory
     {
         get => _country.Territory;
         set
@@ -474,7 +474,7 @@ public class AdminViewModel : ViewModelBase
         con.Close();
         Territory = 0;
         if (output9 != null) 
-            Territory = (int) output9;
+            Territory = (double)output9;
 
         //---------------------------
         
@@ -508,7 +508,7 @@ public class AdminViewModel : ViewModelBase
         con.Close();
         Population = 0;
         if(output11 != null)
-            Population = (int) output11;
+            Population = (double) output11;
         
         //---------------------------
         
